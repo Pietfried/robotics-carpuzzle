@@ -8,7 +8,6 @@ gray_img = cv2.cvtColor(normal_img, cv2.COLOR_BGR2GRAY)
 blurred_img = cv2.medianBlur(gray_img, 5)
 edged_img = cv2.Canny(blurred_img, 90, 300)
 
-<<<<<<< HEAD
 contours, hierarchy = cv2.findContours(edged_img, cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
 
 def show_images():
@@ -41,11 +40,6 @@ def find_board_contour(contours):
         
         return board_contours
 
-print("Amount contours: " ,len(contours))
-find_board_contour(contours)
-print("Done")
-cv2.destroyAllWindows()
-=======
 def show_contours_onebyone(contours):
     for contour in contours:
         cv2.drawContours(normal_img, [contour], -1, (0, 255, 0), -1)
@@ -82,11 +76,11 @@ def remove_doubles(contours):
     return new_contours
 
 def get_contours_external(img):
-    _ ,contours, _ = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    contours, _ = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     return contours
 
 def get_contours_ccomp(img):
-    _, contours, _ = cv2.findContours(img, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(img, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
     return contours
 
 def get_cut_board_img(img, contours):
@@ -120,36 +114,45 @@ def get_slot_contours(img):
             slot_contours.append(contour)
     return slot_contours
 
-def get_areas(contours):
-    areas = []
-    for contour in contours:
-        areas.append(cv2.contourArea(contour))
-    areas.sort()
-    return areas
+def find_matchtes(slot_contours, piece_contours):
+    matches = []
+    best_match = 1
+    best_contour = None
+    for i in range (len(slot_contours)):
+        for j in range(len(piece_contours)):
+            match_value = cv2.matchShapes(slot_contours[i], piece_contours[j], 3, 0.0)
+            if (match_value <= best_match):
+                best_match = match_value
+                best_contour = piece_contours[j]
+        matches.append((slot_contours[i], best_contour))
+        best_match = 1
+    return matches
 
-def get_perimeters(contours):
-    perimiters = []
-    for contour in contours:
-        perimiters.append(cv2.arcLength(contour, True))
-    perimiters.sort()
-    return perimiters
-
-def show_matches(piece_contours, slot_contours):
-    for i in range(len(piece_contours)):
-        cv2.drawContours(normal_img, piece_contours, i, (0, 255, 0), 2)
-        cv2.drawContours(normal_img, slot_contours, i, (0, 255, 0), 2)
-        cv2.imshow("Matches", normal_img)
+def show_matches(matches):
+    for i in range (len(matches)):
+        img = normal_img.copy()
+        slot_contour = matches[i][0]
+        piece_contour = matches[i][1]
+        center = find_center(piece_contour)
+        cv2.drawContours(img, [slot_contour], -1, (0, 255, 0), 2)
+        cv2.drawContours(img, [piece_contour], -1, (0, 255, 0), 2)
+        cv2.circle(img, (center[0], center[1]), 7, (255, 255, 255), -1)
+        cv2.imshow("Matches", img)
         cv2.waitKey(0)
+
+def find_center(contour):
+    M = cv2.moments(contour)
+    cX = int(M["m10"] / M["m00"])
+    cY = int(M["m01"] / M["m00"])
+    return (cX, cY)
+
 
 slot_contours = get_slot_contours(edged_img)
 piece_contours = get_piece_contours(edged_img)
 
-slot_perimiters = get_perimeters(slot_contours)
-piece_perimiters = get_perimeters(piece_contours)
+matches = find_matchtes(slot_contours, piece_contours)
 
-print("slot", get_areas(slot_contours))
-print("piece", get_areas(piece_contours))
+show_matches(matches)
 
-show_matches(piece_contours, slot_contours)
+
 cv2.destroyAllWindows()
->>>>>>> 0f48d121af4665406fbbe630f8bfc7827f228b69
