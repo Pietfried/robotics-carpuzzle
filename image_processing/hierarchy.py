@@ -141,8 +141,6 @@ def show_matches(piece_contours, slot_contours):
         cv2.imshow("Matches", normal_img)
         cv2.waitKey(0)
 
-        piece_contours.so
-
 slot_contours = get_slot_contours(edged_img)
 piece_contours = get_piece_contours(edged_img)
 
