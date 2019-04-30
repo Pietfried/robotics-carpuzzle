@@ -3,16 +3,22 @@ import numpy as np
 import imutils
 
 #Building images
-normal_img = cv2.imread('images/image3.jpg')
+normal_img = cv2.imread('images/image5.jpg')
 gray_img = cv2.cvtColor(normal_img, cv2.COLOR_BGR2GRAY)
 blurred_img = cv2.medianBlur(gray_img, 5)
-edged_img = cv2.Canny(blurred_img, 60, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
+edged_img = cv2.Canny(blurred_img, 56, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
+
+ret, thresh = cv2.threshold(gray_img, 65, 255, cv2.THRESH_BINARY)
+thresh = 255-thresh
+edged_img = thresh
 
 contours, hierarchy = cv2.findContours(edged_img, cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
 
 def show(img):
     cv2.imshow("img", img)
     cv2.waitKey(0)
+
+show(thresh)
 
 def show_images():
         cv2.imshow("normal_img", normal_img)
@@ -110,6 +116,7 @@ def get_cut_contour(contour):
     return result
 
 def get_piece_contours(img):
+    img = (img-255)
     piece_contours = []
     all_contours = get_contours_external(img)
     board_area = get_board_area(all_contours[find_board_contour_idx(all_contours)])
@@ -162,14 +169,10 @@ def find_center(contour):
 slot_contours = get_slot_contours(edged_img)
 piece_contours = get_piece_contours(edged_img)
 
-print(len(piece_contours))
-
-cut_contour_img = get_cut_contour(piece_contours[0])
-show(cut_contour_img)
-
 matches = find_matchtes(slot_contours, piece_contours)
 
-print(find_center(slot_contours[0]))
+#show_contours_onebyone(slot_contours)
+#show_contours_onebyone(piece_contours)
 
 show_matches(matches)
 
