@@ -23,9 +23,15 @@
 \newbox\one
 \newbox\two
 \long\def\loremlines#1{%
+<<<<<<< HEAD
+ \setbox\one=\vbox{\lipsum}
+ \setbox\two=\vsplit\one to #1\baselineskip
+ \unvbox\two}
+=======
 	\setbox\one=\vbox{\lipsum}
 	\setbox\two=\vsplit\one to #1\baselineskip
 	\unvbox\two}
+>>>>>>> 97385d88f5f552cf74f47ae5355b8d47d601be07
 % -------------
 
 
@@ -42,7 +48,11 @@
 
 \newcommand{\documenttype}{Initial Project Proposal}
 \newcommand{\documentname}{\explanation{Car-Puzzle Solver}}
+<<<<<<< HEAD
+ 
+=======
 
+>>>>>>> 97385d88f5f552cf74f47ae5355b8d47d601be07
 \lhead{\explanation{Semester}} 
 \chead{\documentname: \documenttype}
 \rhead{\explanation{\today}}
@@ -54,6 +64,158 @@
 \renewcommand{\footrulewidth}{1pt}
 
 \begin{document}
+<<<<<<< HEAD
+\vspace*{-5ex}
+%\centerline{\Large\bf \documentname}\medskip
+
+\begin{tabular}{ll}
+Document:     & \explanation{MITE\_Robotics\_InitialProjectProposal.tex}\\
+Version:      & \explanation{3.0}\\
+Date:        & \explanation{\today}\\
+Status:       & \explanation{Document State:} final\\
+Group:   & Brüst, Jakob - Gömpel, Piet - Tyagi, Anurag - Röschmann, Niels
+\end{tabular}
+
+% -----------------------------------------------------------------------
+\begin{abstract}\noindent 
+Within this project a combined software of python openCV and the Kuka-software will be implemented. Main purpose of this new software is to solve a puzzle. Image processing will be used to find the pieces and place them to the correct places by using the Kuka robot.
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2ex}
+\end{abstract}
+
+% -----------------------------------------------------------------------
+\section{Goals}
+The goal of this group project is to enable an industrial robot to solve a car puzzle intelligently. The project will finish with the final presentation at week 28. To achieve the project goal the required tasks are split in multiple sub tasks. One of the two main tasks will be to detect the puzzle objects by an image processing software and the second main task will be to align the robot arm according to the coordinates of the puzzle pieces and to grab and place the objects into the correct cardboard positions/slots.\newline
+The secondary goals of the project will be to make the movement as dynamic/fluent as possible and to be able to adapt the software and the robot to different situations like changing the puzzle object or changing positions in real time.
+\newline
+
+% -----------------------------------------------------------------------
+\section{Current Situation}
+For the implementation of the project, an industrial robot from Kuka with an air pressure operated gripper is used. The robot will interact with a camera of the Type uEye UI-1540 at a certain height of 147,5 meter above the workplace. By connecting the robot and the camera through computer vision capabilities we can improve and extend the applications of the Kuka Robot and solve the given task.\newline
+
+% -----------------------------------------------------------------------
+\section{Project Approach}
+The project approach is to distribute the tasks into two main tasks. Each of the tasks will be worked upon by two of the four group members. The following is a short abstract of the two main tasks with the corresponding subtasks:\newline
+\begin{itemize}
+	\item Movement of the Kuka Robot according to the coordinates with the subtasks
+	\begin{itemize}
+		\item Finding the initial origins
+		\item Movement of the robot to the grip holder
+		\item Distance calculation of the objects to the cardboard
+		\item Alignments and transformations for picking up and dropping the puzzle pieces 
+		\item Machine code for the Kuka robot
+		\item Development of the gripper control 		
+	\end{itemize}
+	\item Camera Vision to detect the edges from the pictures to export the important data for the robot movement.
+	\begin{itemize}
+		\item Detection of the cardboard
+		\item Finding all important edges for the processing
+		\item Find matches between empty puzzle fields and puzzle pieces
+		\item Localization of the center of the grip holder		
+	\end{itemize}
+\end{itemize}
+By implementing and demonstrating this project on a smaller scale, it can be used in industries in the future on much bigger scales e.g. container docks or different use cases in industrial production chains. By a dynamic implementation of the project, the combination of the robot and computer vision can be used in many situations with different conditions and various objects.\newline
+To successfully implement the project some requirements are needed. To achieve the project goals a reliable and dynamic software for image processing and for controlling the robot is required. Our group chose the programming language Python as the main software tool for mostly all software parts of the project. Python and OpenCV will be used for image processing and object detection. Further Python is used to remote control the robot with the python entry hack and it will be the interface between the image processing and controlling of the robot.\newline
+
+% -----------------------------------------------------------------------
+\section{Deliverables}
+Another project requirement will be the project documentation. The documentation will contain a broad overview about the project planning and the initial documentation. Furthermore it will contain a detailed description about the project and the development process timeline. An important part will be the report of the software implementation. The report will also contain the inline documentation of the code and the user manual for the car puzzle project.\newline
+The end of the report will include the concluded results, the insights the group members acquired during the project and a demonstration accompanied by a video footage.\newline
+
+% -----------------------------------------------------------------------
+\section{Material and Costs}
+The components required for the car puzzle can be subdivided into hard- and software parts. The software side factors are:\newline
+\begin{itemize}
+\item Python3
+\item OpenCV Library
+\item Kuka Software IDE
+\end{itemize}
+The hardware components for the task are:\newline
+\begin{itemize}
+	\item Kuka Robot
+	\item Camera
+	\item Puzzle
+	\item Black backgorund including underlaying foam
+	\item Kuka Human Interface Device
+	\item Optional:
+	\begin{itemize}
+		\item LED spotlight
+		\item Additional Kuka pressure pipes
+	\end{itemize}
+\end{itemize}
+Future or additional costs are not need for any further purchase.\newline
+
+% -----------------------------------------------------------------------
+\section{Timing}
+The Timing schedule dictates that the group will meet once a week to discuss the current state of the Project and the corresponding subtasks via Scrum meetings. One of the main topics in the meetings will be the discussion about the difficulties that appear. Furthermore, there will be a comparison between the actual and the target performance and also the next steps the group wants to take.\newline
+
+
+\subsection*{Schedule}
+\begin{center}
+	\begin{footnotesize}
+		\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			Week (CW) & 15 & 16 & 17 & 18 & 19 & 20 & 21 & 22 & 23 & 24 & 25 & 26 & 27 & 28 \\
+			\hline
+			Milestone 1      & \multicolumn{3}{c|}{Start}&\multicolumn{11}{c|}{}\\
+			\hline
+			Milestone 2      & \multicolumn{3}{c|}{}&\multicolumn{3}{c|}{Basic}&\multicolumn{8}{c|}{}\\
+			\hline
+			Milestone 3      & \multicolumn{6}{c|}{}&\multicolumn{3}{c|}{Test}&\multicolumn{5}{c|}{}\\
+			\hline
+			Milestone 4      & \multicolumn{9}{c|}{}&\multicolumn{3}{c|}{Prototype}&\multicolumn{2}{c|}{}\\
+			\hline
+			Error fixing     & \multicolumn{12}{c|}{}&\multicolumn{1}{c|}{}&\multicolumn{1}{c|}{}\\
+			\hline
+			Milestone 5      & \multicolumn{13}{c|}{}&\multicolumn{1}{c|}{Pres.}\\
+			\hline
+		\end{tabular}
+	\end{footnotesize}
+\end{center}
+
+\subsection{Milestones}
+\subsubsection*{Milestone 1}
+\begin{tabular}{lp{10cm}}
+	Name:      & \explanation{Initial project presentation}\\
+	Due Date: & \explanation{2019-04-30}\\
+	Accomplished Goals: & \explanation{Hand in initial project describtion and presentation}\\
+	Acceptance Criteria: & \explanation{Project proposal passed Prof. Hoffmanns criteria}
+\end{tabular}
+\subsubsection*{Milestone 2}
+\begin{tabular}{lp{10cm}}
+	Name:      & \explanation{Define basic principles}\\
+	Due Date: & \explanation{2019-05-14}\\
+	Accomplished Goals: & \explanation{Define coordinate system\newline Via openCV it is possible to detect and differentiate the puzzle pieces and destinations.\newline Kuka robot operation space is defined and can't violated, controlled movements via "python interface"}\\
+	Acceptance Criteria: & \explanation{All goal should be archived to the end of week 20}
+\end{tabular}
+\subsubsection*{Milestone 3}
+\begin{tabular}{lp{10cm}}
+	Name:      & \explanation{Implement and test basic principles}\\
+	Due Date: & \explanation{2019-06-04}\\
+	Accomplished Goals: & \explanation{Image processing is able to calculate the coordinate of the puzzle piece handles\newline Kuka robot is able to pick rotate and place a puzzle piece}\\
+	Acceptance Criteria: & \explanation{All goal should be archived to the end of week 23}
+\end{tabular}
+\subsubsection*{Milestone 4}
+\begin{tabular}{lp{10cm}}
+	Name:      & \explanation{Working prototype}\\
+	Due Date: & \explanation{2019-06-25}\\
+	Accomplished Goals: & \explanation{Marriage of image processing and robot control software}\\
+	Acceptance Criteria: & \explanation{All goal should be archived to the end of week 26}
+\end{tabular}
+\subsubsection*{Milestone 5}
+\begin{tabular}{lp{10cm}}
+	Name:      & \explanation{Final presentation}\\
+	Due Date: & \explanation{2019-07-09}\\
+	Accomplished Goals: & \explanation{Final documentation and presentation}\\
+	Acceptance Criteria: & \explanation{Finished in time and with the acceptance of Mr. Höhne and Prof. Hoffmann}
+\end{tabular}
+
+
+% -----------------------------------------------------------------------
+\section{Risks}
+One of the main risks in this group project could be a superficial consideration while dividing the project into subtasks. It may be more effort needed for a subtask then in this stage excepted - this would greatly delay the project. Another risk could be that focus will be shifted to secondary goals that are not needed to solve the car puzzle. This could eventually, but not necessarily, lead to a delay. Furthermore a (temporary) absence of a group member could also influence the project schedule.
+
+=======
 	\vspace*{-5ex}
 	%\centerline{\Large\bf \documentname}\medskip
 	
@@ -207,4 +369,5 @@
 	\section{Risks}
 	One of the main risks in this group project could be a superficial consideration while dividing the project into subtasks. It may be more effort needed for a subtask then in this stage excepted - this would greatly delay the project. Another risk could be that focus will be shifted to secondary goals that are not needed to solve the car puzzle. This could eventually, but not necessarily, lead to a delay. Furthermore a (temporary) absence of a group member could also influence the project schedule.
 	
+>>>>>>> 97385d88f5f552cf74f47ae5355b8d47d601be07
 \end{document}
