@@ -1,13 +1,13 @@
 import cv2
 import numpy as np
-import imutils
+# import cv2.cv as cv
 
 #Building images
-normal_img = cv2.imread('images/image3.jpg')
+normal_img = cv2.imread('images/image1.jpg')
 gray_img = cv2.cvtColor(normal_img, cv2.COLOR_BGR2GRAY)
 blurred_img = cv2.medianBlur(gray_img, 5)
 edged_img = cv2.Canny(blurred_img, 75, 300)
-
+output = normal_img.copy()
 contours, hierarchy = cv2.findContours(edged_img, cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
 
 def show_images():
@@ -129,16 +129,22 @@ def find_matchtes(slot_contours, piece_contours):
     return matches
 
 def show_matches(matches):
+    center_list = []
     for i in range (len(matches)):
         img = normal_img.copy()
         slot_contour = matches[i][0]
         piece_contour = matches[i][1]
         center = find_center(piece_contour)
+        center_list.append(center)
         cv2.drawContours(img, [slot_contour], -1, (0, 255, 0), 2)
         cv2.drawContours(img, [piece_contour], -1, (0, 255, 0), 2)
-        cv2.circle(img, (center[0], center[1]), 7, (255, 255, 255), -1)
-        cv2.imshow("Matches", img)
+
+        cv2.circle(output, (center[0], center[1]), 7, (255, 255, 255), -1)
+        cv2.imshow("Matches", output)
         cv2.waitKey(0)
+    center_list = sorted(center_list, key= lambda x: x[0])
+    print ("center list")
+    print (center_list)
 
 def find_center(contour):
     M = cv2.moments(contour)
@@ -146,10 +152,24 @@ def find_center(contour):
     cY = int(M["m01"] / M["m00"])
     return (cX, cY)
 
+def show_circles():
+    circles = cv2.HoughCircles(gray_img, cv2.HOUGH_GRADIENT, 1, 10, param1=30, param2=40, minRadius=10, maxRadius=17)#will change the values
+
+    if circles is not None:
+        circles = np.round(circles[0, :]).astype("int")
+        circles = sorted(circles, key= lambda x: x[0])
+        print("circles")
+        print(circles)
+
+        for (x, y, r) in circles:
+            cv2.circle(output, (x, y), r, (0, 255, 0), 3)
+            cv2.putText(output, "({},{})".format(x, y),
+                        (int(x - 20), int(y - 20)), cv2.FONT_HERSHEY_SIMPLEX,
+                        0.5, (255, 255, 255), 2)
 
 slot_contours = get_slot_contours(edged_img)
 piece_contours = get_piece_contours(edged_img)
-
+show_circles()
 matches = find_matchtes(slot_contours, piece_contours)
 
 show_matches(matches)
