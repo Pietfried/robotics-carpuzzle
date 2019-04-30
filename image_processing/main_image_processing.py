@@ -3,7 +3,7 @@ import numpy as np
 import imutils
 
 #Building images
-normal_img = cv2.imread('images/image.jpg')
+normal_img = cv2.imread('images/image5.jpg')
 gray_img = cv2.cvtColor(normal_img, cv2.COLOR_BGR2GRAY)
 blurred_img = cv2.medianBlur(gray_img, 5)
 edged_img = cv2.Canny(blurred_img, 90, 300)
