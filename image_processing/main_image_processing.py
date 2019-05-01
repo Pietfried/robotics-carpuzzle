@@ -3,7 +3,7 @@ import numpy as np
 import imutils
 
 #Building images
-normal_img = cv2.imread('images/image3.jpg')
+normal_img = cv2.imread('images/image8.jpg')
 gray_img = cv2.cvtColor(normal_img, cv2.COLOR_BGR2GRAY)
 #blurred_img = cv2.medianBlur(gray_img, 5)
 #edged_img = cv2.Canny(blurred_img, 63, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
@@ -126,7 +126,6 @@ def get_piece_contours(img):
 def get_slot_contours(img):
     slot_contours = []
     cut_board_img = get_cut_board_img(img, get_contours_ccomp(threshold))
-    show(cut_board_img)
     contours = get_contours_external(cut_board_img)
     for contour in contours:
         if (cv2.contourArea(contour) > 10000 and cv2.contourArea(contour) > 0):
@@ -164,37 +163,61 @@ def find_center(contour):
     return (cX, cY)
 
 
+def show_circles():
+    circles = cv2.HoughCircles(gray_img, cv2.HOUGH_GRADIENT, 1, 10, param1=30, param2=40, minRadius=10, maxRadius=17)#will change the values
+
+    if circles is not None:
+        circles = np.round(circles[0, :]).astype("int")
+        circles = sorted(circles, key= lambda x: x[0])
+        print("circles")
+        print(circles)
+
+        for (x, y, r) in circles:
+            cv2.circle(normal_img, (x, y), r, (0, 255, 0), 1)
+            cv2.putText(normal_img, "({},{})".format(x, y),
+                        (int(x - 20), int(y - 20)), cv2.FONT_HERSHEY_SIMPLEX,
+                        0.5, (255, 255, 255), 2)
+
+    show(normal_img)
+
+def get_handle(contour):
+    cut_contour_img = get_cut_contour(contour)
+    gray = cv2.cvtColor(cut_contour_img, cv2.COLOR_BGR2GRAY)
+    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 10, param1=30, param2=20, minRadius=10,
+                               maxRadius=17)  # will change the values
+
+    center = find_center(contour)
+    new_circles = []
+
+    if circles is not None:
+        circles = np.round(circles[0, :]).astype("int")
+        circles = sorted(circles, key= lambda x: x[0])
+
+        #filter out the circles that are to far away from the center (e.g. wheels)
+        for circle in circles:
+            if (abs(circle[0]-center[0]) <= 10 and abs(circle[1] - center[1]) <= 10):
+                new_circles.append(circle)
+
+
+    #this is only printing the circles to an image.
+    for (x, y, r) in new_circles:
+        cv2.circle(cut_contour_img, (x, y), r, (0, 255, 0), 1)
+        cv2.putText(cut_contour_img, "({},{})".format(x, y),
+                    (int(x - 20), int(y - 20)), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (255, 255, 255), 2)
+
+    show(cut_contour_img)
+
 ##Main
 
 slot_contours = get_slot_contours(threshold)
 piece_contours = get_piece_contours(threshold)
 
-matches = find_matchtes(slot_contours, piece_contours)
+for i in range(len(piece_contours)):
+    get_handle(piece_contours[i])
 
-#show_contours_onebyone(slot_contours)
-#show_contours_onebyone(piece_contours)
+#matches = find_matchtes(slot_contours, piece_contours)
 
-#show_matches(matches)
-
-cut_contour_img = get_cut_contour(piece_contours[1])
-gray = cv2.cvtColor(cut_contour_img, cv2.COLOR_BGR2GRAY)
-
-
-show(gray)
-
-
-circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 40,
-              param1=50,
-              param2=30,
-              minRadius=20,
-              maxRadius=40)
-
-circles = np.uint16(np.around(circles))
-for i in circles[0,:]:
-    cv2.circle(cut_contour_img,(i[0],i[1]),i[2],(0,255,0),2)
-    cv2.circle(cut_contour_img,(i[0],i[1]),2,(0,0,255),3)
-
-cv2.imshow('circles', cut_contour_img)
-cv2.waitKey(0)
+#show_circles()
 
 cv2.destroyAllWindows()
