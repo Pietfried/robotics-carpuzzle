@@ -3,28 +3,27 @@ import numpy as np
 import imutils
 
 #Building images
-normal_img = cv2.imread('images/image5.jpg')
+normal_img = cv2.imread('images/image3.jpg')
 gray_img = cv2.cvtColor(normal_img, cv2.COLOR_BGR2GRAY)
-blurred_img = cv2.medianBlur(gray_img, 5)
-edged_img = cv2.Canny(blurred_img, 56, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
+#blurred_img = cv2.medianBlur(gray_img, 5)
+#edged_img = cv2.Canny(blurred_img, 63, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
+ret, threshold = cv2.threshold(gray_img, 60, 255, cv2.THRESH_BINARY)
+threshold = 255-threshold #invert the coloring
 
-ret, thresh = cv2.threshold(gray_img, 65, 255, cv2.THRESH_BINARY)
-thresh = 255-thresh
-edged_img = thresh
-
-contours, hierarchy = cv2.findContours(edged_img, cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
+contours, hierarchy = cv2.findContours(threshold, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
 
 def show(img):
     cv2.imshow("img", img)
     cv2.waitKey(0)
 
-show(thresh)
-
 def show_images():
         cv2.imshow("normal_img", normal_img)
         cv2.waitKey(0)
-        cv2.imshow("edged_img", edged_img)
+        cv2.imshow("edged_img", threshold)
         cv2.waitKey(0)
+
+def invert_coloring(img):
+    return (img-255)
 
 def show_contours_onebyone():
         i = 0
@@ -108,15 +107,14 @@ def get_board_area(contour):
     return cv2.contourArea(contour)
 
 def get_cut_contour(contour):
-    img = cv2.imread("zebra.jpg")
-    stencil = np.zeros(edged_img.shape).astype(edged_img.dtype)
+    stencil = np.zeros(normal_img.shape).astype(normal_img.dtype)
     color = [255, 255, 255]
     cv2.fillPoly(stencil, [contour], color)
-    result = cv2.bitwise_and(edged_img, stencil)
+    result = cv2.bitwise_and(normal_img, stencil)
     return result
 
 def get_piece_contours(img):
-    img = (img-255)
+    img = invert_coloring(img)
     piece_contours = []
     all_contours = get_contours_external(img)
     board_area = get_board_area(all_contours[find_board_contour_idx(all_contours)])
@@ -127,7 +125,7 @@ def get_piece_contours(img):
 
 def get_slot_contours(img):
     slot_contours = []
-    cut_board_img = get_cut_board_img(img, get_contours_ccomp(edged_img))
+    cut_board_img = get_cut_board_img(img, get_contours_ccomp(threshold))
     show(cut_board_img)
     contours = get_contours_external(cut_board_img)
     for contour in contours:
@@ -166,14 +164,37 @@ def find_center(contour):
     return (cX, cY)
 
 
-slot_contours = get_slot_contours(edged_img)
-piece_contours = get_piece_contours(edged_img)
+##Main
+
+slot_contours = get_slot_contours(threshold)
+piece_contours = get_piece_contours(threshold)
 
 matches = find_matchtes(slot_contours, piece_contours)
 
 #show_contours_onebyone(slot_contours)
 #show_contours_onebyone(piece_contours)
 
-show_matches(matches)
+#show_matches(matches)
+
+cut_contour_img = get_cut_contour(piece_contours[1])
+gray = cv2.cvtColor(cut_contour_img, cv2.COLOR_BGR2GRAY)
+
+
+show(gray)
+
+
+circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 40,
+              param1=50,
+              param2=30,
+              minRadius=20,
+              maxRadius=40)
+
+circles = np.uint16(np.around(circles))
+for i in circles[0,:]:
+    cv2.circle(cut_contour_img,(i[0],i[1]),i[2],(0,255,0),2)
+    cv2.circle(cut_contour_img,(i[0],i[1]),2,(0,0,255),3)
+
+cv2.imshow('circles', cut_contour_img)
+cv2.waitKey(0)
 
 cv2.destroyAllWindows()
