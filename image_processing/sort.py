@@ -55,7 +55,7 @@ for c in cnts:
         print (cv2.contourArea(c))
         continue
 
-    # compute the rotated bounding box of the contour
+    # computes the rotated bounding box of the contour
     orig = image.copy()
     box = cv2.minAreaRect(c)
     box = cv2.cv.BoxPoints(box) if imutils.is_cv2() else cv2.boxPoints(box)
