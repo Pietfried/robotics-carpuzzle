@@ -43,7 +43,7 @@ flag, thresh = cv2.threshold(edged, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
 cnts = imutils.grab_contours(cnts)
 
-# s ort the contours from left-to-right and initialize the
+# is ort the contours from left-to-right and initialize the
 # 'pixels per metric' calibration variable
 (cnts, _) = contours.sort_contours(cnts)
 pixelsPerMetric = None
