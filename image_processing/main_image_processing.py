@@ -183,7 +183,7 @@ def show_circles():
 def get_handle(contour):
     cut_contour_img = get_cut_contour(contour)
     gray = cv2.cvtColor(cut_contour_img, cv2.COLOR_BGR2GRAY)
-    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 10, param1=30, param2=20, minRadius=10,
+    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 12, 10, param1=20, param2=10, minRadius=12,
                                maxRadius=17)  # will change the values
 
     center = find_center(contour)
