@@ -286,7 +286,7 @@ def get_slope(line):
     x2 = line[1][0]
     y2 = line[1][1]
     print(x1,y1,x2,y2)
-    print("slope:", y2 - y1 / x2 - x1)
+    print("slope:", (y2 - y1) / (x2 - x1))
     return ((y2 - y1) / (x2 - x1))
 
 def draw_rect(img, rect):
