@@ -165,7 +165,7 @@ def find_center(contour):
     return (cX, cY)
 
 def draw_contours(contours, img):
-    cv2.drawContours(img, contours, -1, (0, 255, 0), 2)
+    cv2.drawContours(img, contours, -1, (0, 255, 255), 2)
 
 #blacks the background except for the given image
 def black_background(img, contour):
@@ -198,6 +198,30 @@ def get_handle_circle(contour):
 
     print("circle:", handle_circle)
     return handle_circle
+
+def get_wheels_circle(contour):
+    cut_piece_img = get_cut_contour(contour)
+    gray_img = cv2.cvtColor(cut_piece_img, cv2.COLOR_BGR2GRAY)
+    ret, thresh = cv2.threshold(gray_img, 35, 255, cv2.THRESH_BINARY)
+    thresh = (255 - thresh)  # switch black and white
+    thresh = black_background(thresh, contour)
+    circles = cv2.HoughCircles(thresh, cv2.HOUGH_GRADIENT, 1.4, 15, param1=20, param2=5, minRadius=13,
+                               maxRadius=15)  # will change the values
+
+    center = find_center(contour)
+    wheel_circles = []
+
+    if circles is not None:
+        circles = np.round(circles[0, :]).astype("int")
+        circles = sorted(circles, key=lambda x: x[0])
+
+        # filter out the circles that are to far away from the center (e.g. wheels)
+        for circle in circles:
+            if (abs(circle[0] - center[0]) >= 10 and abs(circle[1] - center[1]) >= 10):
+                wheel_circles.append(circle)
+
+    print("wheel circles:", wheel_circles)
+    return wheel_circles
 
 def get_handle_coordinates(contour):
     handle_circle = get_handle_circle(contour)
@@ -259,8 +283,7 @@ def init_pieces_and_slots(piece_contours, slot_contours):
 
     return puzzlepieces, slotpieces
 
-def rotateImage(image, angle):
-    image_center = tuple(np.array(image.shape[1::-1]) / 2)
+def rotateImage(image, angle, image_center):
     rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
     result = cv2.warpAffine(image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
     return result
@@ -302,28 +325,6 @@ def get_rect_contour(rect):
 def draw_edge(img, edge):
     cv2.line(img, edge[0], edge[1], (0,0,255), 3)
 
-def get_rotation_angle(slotpiece, puzzlepiece):
-    slotpiece_rect = get_rect(slotpiece.contour)
-    puzzlepiece_rect = get_rect(puzzlepiece.contour)
-    cut_piece_img = get_cut_contour(puzzlepiece.contour)
-    fixed_slope = get_slope(get_base_edge(slotpiece_rect))
-    piece_edge_slope = get_slope(get_base_edge(puzzlepiece_rect))
-
-    angle = 0
-    threshold = 2
-    while(abs(fixed_slope - piece_edge_slope) > threshold):
-        angle = angle + 1
-        cut_piece_img = rotateImage(cut_piece_img.copy(), 1)
-        show(cut_piece_img)
-        contour = get_contours_external(process_img(cut_piece_img))
-        draw_contours(contour, cut_piece_img)
-        show(cut_piece_img)
-        puzzlepiece_rect = get_rect(contour[0])
-        piece_edge_slope = get_slope(get_base_edge(puzzlepiece_rect))
-
-    print("angle:", angle)
-    return angle
-
 def get_angle(edge1, edge2):
     x1 = edge1[0][0]
     x2 = edge1[0][1]
@@ -349,6 +350,15 @@ def process_img(img):
     show(threshold)
     return threshold
 
+def process_croped(img):
+    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # blurred_img = cv2.medianBlur(gray_img, 5)
+    # edged_img = cv2.Canny(blurred_img, 63, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
+    ret, threshold = cv2.threshold(gray_img, 20, 255, cv2.THRESH_BINARY)
+    # threshold = 255 - threshold  # invert the coloring
+    show(threshold)
+    return threshold
+
 ##Main
 
 #Building images
@@ -364,34 +374,69 @@ piece_contours = get_piece_contours(threshold)
 
 puzzlepieces, slotpieces = init_pieces_and_slots(piece_contours, slot_contours)
 
+
 # for i in range(len(puzzlepieces)):
-#     normal_img_cpy = normal_img.copy()
-#     draw_contours(puzzlepieces[i].contour, normal_img_cpy)
-#     draw_contours(puzzlepieces[i].match.contour, normal_img_cpy)
-#     cv2.circle(normal_img_cpy, puzzlepieces[i].handle, 5, (255,255,0), 2)
-#     show(normal_img_cpy)
+#     rect1 = cv2.minAreaRect(puzzlepieces[i].contour)
+#     rect2 = cv2.minAreaRect(puzzlepieces[i].match.contour)
+#
+#     edge1 = get_base_edge(rect1)
+#     edge2 = get_base_edge(rect2)
+#
+#     draw_rect(normal_img, rect1)
+#     draw_rect(normal_img, rect2)
+#     draw_edge(normal_img, edge1)
+#     draw_edge(normal_img, edge2)
+#
+#     angle = get_angle(edge1, edge2)
+#     print("angle:", angle)
+#     show(normal_img)
 
-for i in range(len(puzzlepieces)):
-    rect1 = cv2.minAreaRect(puzzlepieces[i].contour)
-    rect2 = cv2.minAreaRect(puzzlepieces[i].match.contour)
-
-    edge1 = get_base_edge(rect1)
-    edge2 = get_base_edge(rect2)
-
-    draw_rect(normal_img, rect1)
-    draw_rect(normal_img, rect2)
-    draw_edge(normal_img, edge1)
-    draw_edge(normal_img, edge2)
-
-    angle = get_angle(edge1, edge2)
-    print("angle:", angle)
-    show(normal_img)
+# for i in range(len(puzzlepieces)):
+#     cut_piece_img = get_cut_contour(puzzlepieces[i].contour)
+#     show(cut_piece_img)
+#     image_center = find_center(puzzlepieces[i].contour)
+#     cut_piece_img = rotateImage(cut_piece_img, 90, image_center)
+#     show(cut_piece_img)
 
 
-#get_rotation_angle(puzzlepieces[4].match, puzzlepieces[4])
+cut_piece_img = get_cut_contour(puzzlepieces[1].contour)
+## Method 1: crop the region
+x,y,w,h = cv2.boundingRect(puzzlepieces[1].contour)
+croped = cut_piece_img[y:y+h, x:x+w]
 
-cv2.circle(normal_img, (50,0), 20, (0,0,255), 5)
-show(normal_img)
+img = np.zeros((512, 512, 3), np.uint8)
+x_offset=y_offset=200
+img[y_offset:y_offset+croped.shape[0], x_offset:x_offset+croped.shape[1]] = croped
+processed_img = process_img(img.copy())
+contours = get_contours_external(processed_img)
+center = find_center(contours[0])
+img = rotateImage(img, 11, center)
+contours1 = get_contours_external(process_img(img.copy()))
+show(img)
+
+cut_piece_img = get_cut_contour(puzzlepieces[1].match.contour)
+## Method 1: crop the region
+x,y,w,h = cv2.boundingRect(puzzlepieces[1].match.contour)
+croped = cut_piece_img[y:y+h, x:x+w]
+
+img = np.zeros((512, 512, 3), np.uint8)
+x_offset=y_offset=200
+img[y_offset:y_offset+croped.shape[0], x_offset:x_offset+croped.shape[1]] = croped
+processed_img = process_croped(img.copy())
+contours2 = get_contours_external(processed_img)
+show(img)
+
+
+img = np.zeros((512, 512, 3), np.uint8)
+draw_contours(contours1, img)
+draw_contours(contours2, img)
+show(img)
+
+contours3 = get_contours_external(process_croped(img))
+img = np.zeros((512, 512, 3), np.uint8)
+draw_contours(contours3, img)
+show(img)
+
 cv2.destroyAllWindows()
 
 
