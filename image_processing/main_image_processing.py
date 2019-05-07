@@ -86,6 +86,10 @@ def get_contours_external(img):
     contours, _ = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     return contours
 
+def get_contours_external_simple(img):
+    contours, _ = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    return contours
+
 def get_contours_ccomp(img):
     contours, _ = cv2.findContours(img, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
     return contours
@@ -125,7 +129,6 @@ def get_slot_contours(img):
     cut_board_img = process_for_slots(img)
 
     contours = get_contours_external(cut_board_img)
-    show(cut_board_img)
 
     for contour in contours:
         if (cv2.contourArea(contour) > 10000 and cv2.contourArea(contour) > 0):
@@ -169,8 +172,8 @@ def show_matches(matches):
 
 def find_center(contour):
     M = cv2.moments(contour)
-    cX = int(M["m10"] / M["m00"])
-    cY = int(M["m01"] / M["m00"])
+    cX = int(M["m10"] / M["m00"]) if M["m00"] else 0
+    cY = int(M["m01"] / M["m00"]) if M["m00"] else 0
     return (cX, cY)
 
 def draw_contours(contours, img):
@@ -184,46 +187,106 @@ def black_background(img, contour):
     result = cv2.bitwise_and(img, stencil)
     return result
 
+# def get_handle_circle(contour):
+#     cut_piece_img = get_cut_contour(contour)
+#     gray_img = cv2.cvtColor(cut_piece_img, cv2.COLOR_BGR2GRAY)
+#     edged_img = cv2.Canny(gray_img, 150, 300) # these parameters are important. The image detection behaves differently when changing the contrast.
+#     ret, thresh = cv2.threshold(gray_img, 35, 255, cv2.THRESH_BINARY)
+#     thresh = (255 - thresh) # switch black and white
+#     thresh = black_background(thresh, contour)
+#
+#     #############
+#     contours = get_contours_external_simple(thresh)
+#     for curr_contour in contours:
+#         draw_contours([curr_contour], cut_piece_img)
+#         print("arclength:", cv2.arcLength(curr_contour, True))
+#
+#     ############
+#
+#     circles = cv2.HoughCircles(thresh, cv2.HOUGH_GRADIENT, 1.4, 15, param1=20, param2=5, minRadius=13,
+#                                maxRadius=15)  # will change the values
+#
+#     center = find_center(contour)
+#     handle_circle = None
+#
+#     if circles is not None:
+#         circles = np.round(circles[0, :]).astype("int")
+#         circles = sorted(circles, key=lambda x: x[0])
+#
+#         # filter out the circles that are to far away from the center (e.g. wheels)
+#         for circle in circles:
+#             if (abs(circle[0] - center[0]) <= 10 and abs(circle[1] - center[1]) <= 10):
+#                 handle_circle = circle
+#
+#     return handle_circle
+#
+
 def get_handle_circle(contour):
     cut_piece_img = get_cut_contour(contour)
     gray_img = cv2.cvtColor(cut_piece_img, cv2.COLOR_BGR2GRAY)
-    ret, thresh = cv2.threshold(gray_img, 35, 255, cv2.THRESH_BINARY)
-    thresh = (255 - thresh) # switch black and white
+    edged_img = cv2.Canny(gray_img, 150, 300) # these parameters are important. The image detection behaves differently when changing the contrast.
+    ret, thresh = cv2.threshold(gray_img, 40, 255, cv2.THRESH_BINARY)
+    #thresh = (255 - thresh) # switch black and white
     thresh = black_background(thresh, contour)
-    circles = cv2.HoughCircles(thresh, cv2.HOUGH_GRADIENT, 1.4, 15, param1=20, param2=5, minRadius=13,
-                               maxRadius=15)  # will change the values
 
+    contours = get_contours_ccomp(thresh)
+    new_contours = []
+
+    #show(thresh)
+
+    for curr_contour in contours:
+        # print("area:", cv2.contourArea(curr_contour, True))
+        # print("center difference:", abs(find_center(contour)[0] - find_center(curr_contour)[0]))
+        # print("Länge:", cv2.arcLength(curr_contour, True))
+        # draw_contours([curr_contour], cut_piece_img)
+        # show(cut_piece_img)
+        if (isValidCircle(curr_contour, contour)):
+            new_contours.append(curr_contour)
+
+    print("length:currcontour:", len(new_contours))
+
+    if (len(new_contours) == 1):
+        return new_contours[0]
+    else:
+        print("Error! Did not find circle correctly.")
+        return None
+
+def isValidCircle(curr_contour, contour):
     center = find_center(contour)
-    handle_circle = None
-
-    if circles is not None:
-        circles = np.round(circles[0, :]).astype("int")
-        circles = sorted(circles, key=lambda x: x[0])
-
-        # filter out the circles that are to far away from the center (e.g. wheels)
-        for circle in circles:
-            if (abs(circle[0] - center[0]) <= 10 and abs(circle[1] - center[1]) <= 10):
-                handle_circle = circle
-
-    return handle_circle
+    curr_center = find_center(curr_contour)
+    area = cv2.contourArea(curr_contour, True)
+    #valid circle if: area is ok, length is ok and distance to center is ok
+    if (cv2.arcLength(curr_contour, True) > 50 and cv2.arcLength(curr_contour, True) < 70 and abs(
+        curr_center[0] - center[0]) < 20 and abs(
+        curr_center[1] - center[1]) < 20 and abs(area) > 250 and abs(area) < 320):
+        return True
+    else:
+        return False
 
 def get_handle_coordinates(contour):
     handle_circle = get_handle_circle(contour)
     if handle_circle is not None:
-        return (handle_circle[0], handle_circle[1])
+        return (find_center(handle_circle))
     else:
         return (0,0) #TODO: fix this
 
+# def show_handle_circles(piece_contours):
+#     for i in range(len(piece_contours)):
+#         circle = get_handle_circle(piece_contours[i])
+#         # this is only printing the circles to an image.
+#
+#         if circle is not None:
+#             cv2.circle(normal_img, (circle[0], circle[1]), circle[2], (0, 255, 0), 1)
+#             cv2.putText(normal_img, "({},{})".format(circle[0], circle[1]),
+#                         (int(circle[0] - 20), int(circle[1]- 20)), cv2.FONT_HERSHEY_SIMPLEX,
+#                         0.5, (255, 255, 255), 2)
+#     show(normal_img)
+
 def show_handle_circles(piece_contours):
     for i in range(len(piece_contours)):
-        circle = get_handle_circle(piece_contours[i])
-        # this is only printing the circles to an image.
+        contour = get_handle_circle(piece_contours[i])
+        draw_contours([contour], normal_img)
 
-        if circle is not None:
-            cv2.circle(normal_img, (circle[0], circle[1]), circle[2], (0, 255, 0), 1)
-            cv2.putText(normal_img, "({},{})".format(circle[0], circle[1]),
-                        (int(circle[0] - 20), int(circle[1]- 20)), cv2.FONT_HERSHEY_SIMPLEX,
-                        0.5, (255, 255, 255), 2)
     show(normal_img)
 
 def increase_brightness(img, value=30):
@@ -446,10 +509,39 @@ def process_img(img, threshold_value):
     threshold = 255 - threshold  # invert the coloring
     return threshold
 
+def get_point_difference(point1, point2):
+    x = point1[0] - point2[0]
+    y = point1[1] - point2[1]
+    return (x,y)
+
+def rotate_vector(point, angle):
+    rad = (angle*360)/(2*math.pi)
+    x = point[0]
+    y = point[1]
+    x_prime = x * math.cos(rad) - y * math.sin(rad)
+    y_prime = x * math.sin(rad) + y * math.cos(rad)
+
+    return (x_prime, y_prime)
+
+def get_slot_center(slotpiece):
+    puzzle_contour = slotpiece.match.contour
+    puzzle_contour_center = find_center(puzzle_contour)
+    handle_center = slotpiece.match.center
+
+    difference = get_point_difference(puzzle_contour_center, handle_center)
+    vector = rotate_piece(difference, slotpiece.match.angle)
+
+    slot_contour = slotpiece.contour
+    slot_contour_center = find_center(slot_contour)
+
+    result = (slot_contour_center[0] + vector[0], slot_contour_center[1] + vector[1])
+
+    return result
+
 ##Main
 
 #Building images
-normal_img = cv2.imread('images/image9.jpg')
+normal_img = cv2.imread('images/image5.jpg')
 gray_img = cv2.cvtColor(normal_img, cv2.COLOR_BGR2GRAY)
 #blurred_img = cv2.medianBlur(gray_img, 5)
 #edged_img = cv2.Canny(blurred_img, 63, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
@@ -458,19 +550,31 @@ threshold = 255-threshold #invert the coloring
 
 slot_contours = get_slot_contours(process_for_pieces(normal_img))
 piece_contours = get_piece_contours(process_for_pieces(normal_img))
-
-matches = find_matchtes(slot_contours, piece_contours)
-
-show_matches(matches)
-show_handle_circles(piece_contours)
+#
+# matches = find_matchtes(slot_contours, piece_contours)
+# #
+# show_matches(matches)
+# show_handle_circles(piece_contours)
 
 puzzlepieces, slotpieces = init_pieces_and_slots(piece_contours, slot_contours)
 
-for i in range(len(puzzlepieces)):
-     print ("angle:", puzzlepieces[i].angle)
-     cv2.putText(normal_img, str(("angle:", int(puzzlepieces[i].angle))), find_center(puzzlepieces[i].contour), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1)
+for piece in puzzlepieces:
+    rect1 = get_rect(piece.match.contour)
+    rect2 = get_rect(piece.contour)
+    draw_rect(normal_img, rect1)
+    draw_rect(normal_img, rect2)
+    show(normal_img)
 
-show(normal_img)
+#
+#
+# for i in range(len(puzzlepieces)):
+#      print ("angle:", puzzlepieces[i].angle)
+#      cv2.putText(normal_img, str(("angle:", int(puzzlepieces[i].angle))), find_center(puzzlepieces[i].contour), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1)
+#
+# show(normal_img)
+
+
+
 
 cv2.destroyAllWindows()
 
