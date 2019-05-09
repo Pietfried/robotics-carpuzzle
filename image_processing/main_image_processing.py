@@ -304,15 +304,16 @@ def increase_brightness(img, value=30):
 
 #Classes
 class PuzzlePiece:
-    def __init__(self, contour, handle, match, angle = None):
+    def __init__(self, contour, handle_center, match, angle = None):
         self.contour = contour
-        self.handle = handle
+        self.handle_center = handle_center
         self.match = match #slotpiece
         self.angle = angle
 
 class SlotPiece:
     def __init__(self, contour, match):
         self.contour = contour
+        self.center = None
         self.match = match #puzzlepiece
 
 def init_pieces_and_slots(piece_contours, slot_contours):
@@ -329,6 +330,7 @@ def init_pieces_and_slots(piece_contours, slot_contours):
         puzzlepiece.match = slotpiece
         puzzlepiece.angle = get_piece_angle(puzzlepiece)
         adjust_angle(puzzlepiece)
+        slotpiece.center = get_slot_center(slotpiece)
         slotpieces.append(slotpiece)
         puzzlepieces.append(puzzlepiece)
 
@@ -521,19 +523,21 @@ def rotate_vector(point, angle):
     x_prime = x * math.cos(rad) - y * math.sin(rad)
     y_prime = x * math.sin(rad) + y * math.cos(rad)
 
+    print(x_prime, y_prime)
     return (x_prime, y_prime)
 
 def get_slot_center(slotpiece):
     puzzle_contour = slotpiece.match.contour
     puzzle_contour_center = find_center(puzzle_contour)
-    handle_center = slotpiece.match.center
+    handle_center = slotpiece.match.handle_center
 
     difference = get_point_difference(puzzle_contour_center, handle_center)
-    vector = rotate_piece(difference, slotpiece.match.angle)
+    vector = rotate_vector(difference, slotpiece.match.angle)
 
     slot_contour = slotpiece.contour
     slot_contour_center = find_center(slot_contour)
 
+    print("slot contour center before adding:", slot_contour_center)
     result = (slot_contour_center[0] + vector[0], slot_contour_center[1] + vector[1])
 
     return result
@@ -558,13 +562,15 @@ piece_contours = get_piece_contours(process_for_pieces(normal_img))
 
 puzzlepieces, slotpieces = init_pieces_and_slots(piece_contours, slot_contours)
 
-for piece in puzzlepieces:
-    rect1 = get_rect(piece.match.contour)
-    rect2 = get_rect(piece.contour)
-    draw_rect(normal_img, rect1)
-    draw_rect(normal_img, rect2)
-    show(normal_img)
+matches = find_matchtes(slot_contours, piece_contours)
+show_matches(matches)
 
+show_handle_circles(piece_contours)
+
+for piece in puzzlepieces:
+    print("1:", cv2.contourArea(piece.contour, True))
+    print("2:",
+          cv2.contourArea(piece.match.contour, True))
 #
 #
 # for i in range(len(puzzlepieces)):
