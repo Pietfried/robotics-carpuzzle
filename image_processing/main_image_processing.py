@@ -243,8 +243,6 @@ def get_handle_circle(contour):
         if (isValidCircle(curr_contour, contour)):
             new_contours.append(curr_contour)
 
-    print("length:currcontour:", len(new_contours))
-
     if (len(new_contours) == 1):
         return new_contours[0]
     else:
@@ -330,6 +328,11 @@ def init_pieces_and_slots(piece_contours, slot_contours):
         puzzlepiece.match = slotpiece
         puzzlepiece.angle = get_piece_angle(puzzlepiece)
         adjust_angle(puzzlepiece)
+
+        puzzlepiece.angle = (puzzlepiece.angle + 360) % 360
+
+        print("angle_init:", puzzlepiece.angle)
+
         slotpiece.center = get_slot_center(slotpiece)
         slotpieces.append(slotpiece)
         puzzlepieces.append(puzzlepiece)
@@ -456,6 +459,10 @@ def get_overlay_area(puzzlepiece, angle):
     dy = center_puzzle[1] - center_slot[1]
 
     img = draw_overlaying_contours_to_mask([contours_puzzlepiece, contours_slotpiece], (dx,dy))
+    # draw_rect(img, cv2.minAreaRect(contours_slotpiece[0]))
+    # draw_rect(img, cv2.minAreaRect(contours_puzzlepiece[0]))
+    # show(img)
+
     img = process_img(img, 20)
     img = (255-img)
     overall_contour = get_contours_external(img)
@@ -516,14 +523,16 @@ def get_point_difference(point1, point2):
     y = point1[1] - point2[1]
     return (x,y)
 
-def rotate_vector(point, angle):
-    rad = (angle*360)/(2*math.pi)
-    x = point[0]
-    y = point[1]
+def rotate_vector(vector, angle):
+    angle = -angle + 180
+    rad = math.radians(angle)
+    #print("rad:", rad)
+    x = vector[0]
+    y = vector[1]
+
     x_prime = x * math.cos(rad) - y * math.sin(rad)
     y_prime = x * math.sin(rad) + y * math.cos(rad)
 
-    print(x_prime, y_prime)
     return (x_prime, y_prime)
 
 def get_slot_center(slotpiece):
@@ -532,7 +541,8 @@ def get_slot_center(slotpiece):
     handle_center = slotpiece.match.handle_center
 
     difference = get_point_difference(puzzle_contour_center, handle_center)
-    vector = rotate_vector(difference, slotpiece.match.angle)
+    print("slotpiecematchangle:", slotpiece.match.angle)
+    vector = rotate_vector(difference, (slotpiece.match.angle))
 
     slot_contour = slotpiece.contour
     slot_contour_center = find_center(slot_contour)
@@ -540,12 +550,44 @@ def get_slot_center(slotpiece):
     print("slot contour center before adding:", slot_contour_center)
     result = (slot_contour_center[0] + vector[0], slot_contour_center[1] + vector[1])
 
-    return result
+    return (int(result[0]), int(result[1]))
+
+def rotate_contour(contour, angle):
+    center = find_center(contour)
+    new_contour = contour.copy()
+    for i in range(len(contour)):
+        point = get_point_difference(center, new_contour[i][0])
+        new_contour[i][0] = rotate_vector(point, angle)
+        #contour[i][0] = ((contour[i][0][0] + center[0]), contour[i][0][1] + center[1])
+    return new_contour
+
+def draw_overlaying_contours_original(img, puzzlepieces):
+    for piece in puzzlepieces:
+        print("angle:", piece.angle)
+        rotated_contour = rotate_contour(piece.contour, piece.angle)
+        rotated_center_contour = shift_contour(rotated_contour, find_center(piece.contour))
+        draw_contours([rotated_center_contour], img)
+        show(img)
+
+        rotated_contour = shift_contour(rotated_contour, find_center(piece.match.contour))
+        draw_contours([rotated_contour], img)
+        show(img)
+
+def shift_contour(contour, center):
+    new_contour = contour.copy()
+    for i in range(len(contour)):
+        new_contour[i][0] = add_points(new_contour[i][0], center)
+    return new_contour
+
+def add_points(point1, point2):
+    x = point1[0] + point2[0]
+    y = point1[1] + point2[1]
+    return (x, y)
 
 ##Main
 
 #Building images
-normal_img = cv2.imread('images/image5.jpg')
+normal_img = cv2.imread('images/image10.jpg')
 gray_img = cv2.cvtColor(normal_img, cv2.COLOR_BGR2GRAY)
 #blurred_img = cv2.medianBlur(gray_img, 5)
 #edged_img = cv2.Canny(blurred_img, 63, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
@@ -563,15 +605,20 @@ piece_contours = get_piece_contours(process_for_pieces(normal_img))
 puzzlepieces, slotpieces = init_pieces_and_slots(piece_contours, slot_contours)
 
 matches = find_matchtes(slot_contours, piece_contours)
-show_matches(matches)
 
-show_handle_circles(piece_contours)
+# for piece in puzzlepieces:
+#     cv2.circle(normal_img, find_center(piece.contour), 1, (0, 255, 0), 1)
+#     show(normal_img)
+#     cv2.circle(normal_img, piece.handle_center, 1, (0, 0, 255), 1)
+#     show(normal_img)
+#     cv2.circle(normal_img, find_center(piece.match.contour), 1, (0, 255, 0), 1)
+#     show(normal_img)
+#     print(piece.match.center)
+#     cv2.circle(normal_img, piece.match.center, 1, (0, 0, 255), 1)
+#     show(normal_img)
 
-for piece in puzzlepieces:
-    print("1:", cv2.contourArea(piece.contour, True))
-    print("2:",
-          cv2.contourArea(piece.match.contour, True))
-#
+draw_overlaying_contours_original(normal_img, puzzlepieces)
+
 #
 # for i in range(len(puzzlepieces)):
 #      print ("angle:", puzzlepieces[i].angle)
