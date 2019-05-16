@@ -244,6 +244,7 @@ def get_handle_circle(contour):
             new_contours.append(curr_contour)
 
     if (len(new_contours) == 1):
+        print("found circle.")
         return new_contours[0]
     else:
         print("Error! Did not find circle correctly.")
@@ -587,35 +588,29 @@ def add_points(point1, point2):
 ##Main
 
 #Building images
-normal_img = cv2.imread('images/image10.jpg')
+normal_img = cv2.imread('images/image11.jpg')
 gray_img = cv2.cvtColor(normal_img, cv2.COLOR_BGR2GRAY)
 #blurred_img = cv2.medianBlur(gray_img, 5)
 #edged_img = cv2.Canny(blurred_img, 63, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
-ret, threshold = cv2.threshold(gray_img, 50, 255, cv2.THRESH_BINARY)
+ret, threshold = cv2.threshold(gray_img, 65, 255, cv2.THRESH_BINARY)
 threshold = 255-threshold #invert the coloring
+
+show(threshold)
 
 slot_contours = get_slot_contours(process_for_pieces(normal_img))
 piece_contours = get_piece_contours(process_for_pieces(normal_img))
+
+
+print(len(slot_contours))
+print(len(piece_contours))
 #
 # matches = find_matchtes(slot_contours, piece_contours)
 # #
 # show_matches(matches)
-# show_handle_circles(piece_contours)
 
 puzzlepieces, slotpieces = init_pieces_and_slots(piece_contours, slot_contours)
 
-matches = find_matchtes(slot_contours, piece_contours)
-
-# for piece in puzzlepieces:
-#     cv2.circle(normal_img, find_center(piece.contour), 1, (0, 255, 0), 1)
-#     show(normal_img)
-#     cv2.circle(normal_img, piece.handle_center, 1, (0, 0, 255), 1)
-#     show(normal_img)
-#     cv2.circle(normal_img, find_center(piece.match.contour), 1, (0, 255, 0), 1)
-#     show(normal_img)
-#     print(piece.match.center)
-#     cv2.circle(normal_img, piece.match.center, 1, (0, 0, 255), 1)
-#     show(normal_img)
+show_handle_circles(piece_contours)
 
 draw_overlaying_contours_original(normal_img, puzzlepieces)
 
