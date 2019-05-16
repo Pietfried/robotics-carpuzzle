@@ -37,8 +37,9 @@ def find_board_contour(contours):
         
         return board_contours
 
-def show_contours_onebyone(contours):
-    for contour in contours:
+def show_contours_onebyone(pieces):
+    for piece in pieces:
+        contour = piece.contour
         cv2.drawContours(normal_img, [contour], -1, (0, 255, 0), -1)
         cv2.imshow("Contour image", normal_img)
         cv2.waitKey(0)
@@ -135,17 +136,17 @@ def get_slot_contours(img):
             slot_contours.append(contour)
     return slot_contours
 
-def find_matchtes(slot_contours, piece_contours):
+def find_matchtes(puzzlepieces, slotpieces):
     matches = []
     best_match = 1
     best_contour = None
-    for i in range (len(slot_contours)):
-        for j in range(len(piece_contours)):
-            match_value = cv2.matchShapes(slot_contours[i], piece_contours[j], 3, 0.0)
+    for i in range (len(slotpieces)):
+        for j in range(len(puzzlepieces)):
+            match_value = cv2.matchShapes(slotpieces[i].contour, puzzlepieces[j].contour, 3, 0.0)
             if (match_value <= best_match):
                 best_match = match_value
-                best_contour = piece_contours[j]
-        matches.append((slot_contours[i], best_contour))
+                best_contour = puzzlepieces[j].contour
+        matches.append((slotpieces[i].contour, best_contour))
         best_match = 1
     return matches
 
@@ -235,11 +236,11 @@ def get_handle_circle(contour):
     #show(thresh)
 
     for curr_contour in contours:
-        # print("area:", cv2.contourArea(curr_contour, True))
-        # print("center difference:", abs(find_center(contour)[0] - find_center(curr_contour)[0]))
-        # print("Länge:", cv2.arcLength(curr_contour, True))
-        # draw_contours([curr_contour], cut_piece_img)
-        # show(cut_piece_img)
+        #print("area:", cv2.contourArea(curr_contour, True))
+        #print("center difference:", abs(find_center(contour)[0] - find_center(curr_contour)[0]))
+        #print("Länge:", cv2.arcLength(curr_contour, True))
+        #draw_contours([curr_contour], cut_piece_img)
+        #show(cut_piece_img)
         if (isValidCircle(curr_contour, contour)):
             new_contours.append(curr_contour)
 
@@ -257,7 +258,7 @@ def isValidCircle(curr_contour, contour):
     #valid circle if: area is ok, length is ok and distance to center is ok
     if (cv2.arcLength(curr_contour, True) > 50 and cv2.arcLength(curr_contour, True) < 70 and abs(
         curr_center[0] - center[0]) < 20 and abs(
-        curr_center[1] - center[1]) < 20 and abs(area) > 250 and abs(area) < 320):
+        curr_center[1] - center[1]) < 20 and abs(area) > 245 and abs(area) < 320):
         return True
     else:
         return False
@@ -281,9 +282,9 @@ def get_handle_coordinates(contour):
 #                         0.5, (255, 255, 255), 2)
 #     show(normal_img)
 
-def show_handle_circles(piece_contours):
-    for i in range(len(piece_contours)):
-        contour = get_handle_circle(piece_contours[i])
+def show_handle_circles(puzzlepieces):
+    for piece in puzzlepieces:
+        contour = get_handle_circle(piece.contour)
         draw_contours([contour], normal_img)
 
     show(normal_img)
@@ -315,7 +316,11 @@ class SlotPiece:
         self.center = None
         self.match = match #puzzlepiece
 
-def init_pieces_and_slots(piece_contours, slot_contours):
+def init_pieces_and_slots(normal_img):
+
+    slot_contours = get_slot_contours(process_img(normal_img, 50))
+    piece_contours = get_piece_contours(process_img(normal_img, 50))
+
     puzzlepieces = []
     slotpieces = []
     for i in range(len(piece_contours)):
@@ -585,42 +590,50 @@ def add_points(point1, point2):
     y = point1[1] + point2[1]
     return (x, y)
 
+################ COORDINATE TEST ################
+
+### 1 mm = 2.3 pixel
+
+normal_img = cv2.imread('images/coordinate_test1.jpg')
+img = process_img(normal_img, 50)
+contours = get_contours_external_simple(img)
+
+new_contours = []
+for contour in contours:
+
+    if (cv2.arcLength(contour, True) > 22 and cv2.arcLength(contour, True) < 24):
+        print(cv2.arcLength(contour, True))
+        new_contours.append(contour)
+
+print(len(new_contours))
+
+contour1 = new_contours[5]
+contour2 = new_contours[6]
+
+center1 = find_center(contour1)
+center2 = find_center(contour2)
+
+draw_contours([contour1, contour2], normal_img)
+
+
+print("Distance:", get_distance(center1, center2))
+
+contour1 = new_contours[6]
+contour2 = new_contours[2]
+
+center1 = find_center(contour1)
+center2 = find_center(contour2)
+print("Distance:", get_distance(center1, center2))
+
+
+draw_contours([contour1, contour2], normal_img)
+
+show(normal_img)
+
+
 ##Main
-
-#Building images
-normal_img = cv2.imread('images/image11.jpg')
-gray_img = cv2.cvtColor(normal_img, cv2.COLOR_BGR2GRAY)
-#blurred_img = cv2.medianBlur(gray_img, 5)
-#edged_img = cv2.Canny(blurred_img, 63, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
-ret, threshold = cv2.threshold(gray_img, 65, 255, cv2.THRESH_BINARY)
-threshold = 255-threshold #invert the coloring
-
-show(threshold)
-
-slot_contours = get_slot_contours(process_for_pieces(normal_img))
-piece_contours = get_piece_contours(process_for_pieces(normal_img))
-
-
-print(len(slot_contours))
-print(len(piece_contours))
-#
-# matches = find_matchtes(slot_contours, piece_contours)
-# #
-# show_matches(matches)
-
-puzzlepieces, slotpieces = init_pieces_and_slots(piece_contours, slot_contours)
-
-show_handle_circles(piece_contours)
-
-draw_overlaying_contours_original(normal_img, puzzlepieces)
-
-#
-# for i in range(len(puzzlepieces)):
-#      print ("angle:", puzzlepieces[i].angle)
-#      cv2.putText(normal_img, str(("angle:", int(puzzlepieces[i].angle))), find_center(puzzlepieces[i].contour), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1)
-#
-# show(normal_img)
-
+normal_img = cv2.imread('images/coordinate_test1.jpg')
+#puzzlepieces, slotpieces = init_pieces_and_slots(normal_img)
 
 
 
