@@ -633,9 +633,9 @@ show(normal_img)
 
 ##Main
 normal_img = cv2.imread('images/coordinate_test1.jpg')
-#puzzlepieces, slotpieces = init_pieces_and_slots(normal_img)
+puzzlepieces, slotpieces = init_pieces_and_slots(normal_img)
 
-
+#TODO: Methods to check if the initialization was successful.
 
 cv2.destroyAllWindows()
 
