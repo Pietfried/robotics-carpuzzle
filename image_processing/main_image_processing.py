@@ -203,7 +203,12 @@ def find_match(contour, contours):
         if (match_value <= best_match):
             best_match = match_value
             best_contour = contours[i]
-    return best_contour
+
+    if (match_value <= 1):
+        return best_contour
+    else:
+        print("Error. Match value is too high.")
+        return best_contour
 
 def show_matches(puzzlepieces, img):
     """
@@ -318,7 +323,7 @@ def get_handle_coordinates(contour, img):
     if handle_circle is not None:
         return (find_center(handle_circle))
     else:
-        return (0, 0)  # TODO: fix this
+        return (0,0)
 
 def show_handle_circles(puzzlepieces, img):
     """
@@ -789,6 +794,29 @@ def add_points(point1, point2):
     y = point1[1] + point2[1]
     return (x, y)
 
+def check_initialization(puzzlepieces, slotpieces):
+    return check_contours(slotpieces, puzzlepieces) and check_centers(slotpieces, puzzlepieces)
+    #check_angle(puzzlepieces)
+    #check_matches(puzzlepieces)
+
+
+def check_contours(slotpieces, puzzlepieces):
+    if (len(slotpieces) != len(puzzlepieces)):
+        return False
+    for i in range(len(slotpieces)):
+        if (slotpieces[i].contour is None or puzzlepieces[i].contour is None):
+            return False
+    return True
+
+def check_centers(slotpieces, puzzlepieces):
+    if (len(slotpieces) != len(puzzlepieces)):
+        return False
+    for i in range(len(slotpieces)):
+        if (slotpieces[i].center == (0,0) or puzzlepieces[i].handle_center == (0,0)):
+            return False
+    return True
+
+
 
 ################ COORDINATE TEST ################
 
@@ -831,13 +859,3 @@ def add_points(point1, point2):
 # show(normal_img)
 #
 
-##Main
-normal_img = cv2.imread('images/image12.jpg')
-puzzlepieces, slotpieces = init_pieces_and_slots(normal_img)
-
-show_matches(puzzlepieces, normal_img)
-show_handle_circles(puzzlepieces, normal_img)
-
-# TODO: Methods to check if the initialization was successful.
-
-cv2.destroyAllWindows()
