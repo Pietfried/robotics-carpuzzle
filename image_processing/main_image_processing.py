@@ -1,9 +1,6 @@
 import cv2
-from matplotlib import pyplot as plt
 import numpy as np
-import imutils
 import math
-from scipy import ndimage
 
 # Classes
 class PuzzlePiece:
@@ -271,24 +268,27 @@ def get_handle_circle(contour, img):
 
     cut_piece_img = get_cut_contour(contour, img)
     gray_img = cv2.cvtColor(cut_piece_img, cv2.COLOR_BGR2GRAY)
-    ret, thresh = cv2.threshold(gray_img, 40, 255, cv2.THRESH_BINARY)
+    ret, thresh = cv2.threshold(gray_img, 60, 255, cv2.THRESH_BINARY)
     thresh = black_background(thresh, contour)
 
     contours = get_contours_ccomp(thresh)
     new_contours = []
 
+    #show(thresh)
+
     for curr_contour in contours:
-        # print("area:", cv2.contourArea(curr_contour, True))
-        # print("center difference:", abs(find_center(contour)[0] - find_center(curr_contour)[0]))
-        # print("Länge:", cv2.arcLength(curr_contour, True))
-        # draw_contours([curr_contour], cut_piece_img)
-        # show(cut_piece_img)
+        #print("area:", cv2.contourArea(curr_contour, True))
+        #print("center difference:", abs(find_center(contour)[0] - find_center(curr_contour)[0]))
+        #print("Länge:", cv2.arcLength(curr_contour, True))
+        #draw_contours([curr_contour], cut_piece_img)
+        #show(cut_piece_img)
         if (isValidCircle(curr_contour, contour)):
             new_contours.append(curr_contour)
 
     if (len(new_contours) == 1):
         return new_contours[0]
     else:
+        print(len(new_contours))
         print("Error! Did not find circle correctly.")
         return None
 
@@ -336,39 +336,6 @@ def show_handle_circles(puzzlepieces, img):
         draw_contours([contour], img)
 
     show(img)
-
-def init_pieces_and_slots(img):
-    """
-    method to init all puzzlepieces and slotpieces of the given image. This method will process and the image and it will retrieve and store all relevant information
-    inside the PuzzlePiece and the SlotPiece objects.
-    :param img: the original image
-    :return: lists of puzzlepieces and slotpieces
-    """
-    slot_contours = get_slot_contours(img)
-    piece_contours = get_piece_contours(process_img(img, 50))
-
-    puzzlepieces = []
-    slotpieces = []
-    for i in range(len(piece_contours)):
-        # initializing puzzlepiece
-        match_contour = find_match(piece_contours[i], slot_contours)
-        puzzlepiece = PuzzlePiece(piece_contours[i], get_handle_coordinates(piece_contours[i], img),
-                                  SlotPiece(match_contour, None))
-
-        # initializing slotpiece
-        slotpiece = puzzlepiece.match
-        slotpiece.match = puzzlepiece
-        puzzlepiece.match = slotpiece
-        puzzlepiece.angle = get_piece_angle(puzzlepiece)
-        adjust_angle(puzzlepiece, img)
-
-        puzzlepiece.angle = (puzzlepiece.angle + 360) % 360
-
-        slotpiece.center = get_slot_center(slotpiece)
-        slotpieces.append(slotpiece)
-        puzzlepieces.append(puzzlepiece)
-
-    return puzzlepieces, slotpieces
 
 
 def rotateImage(image, angle, image_center):
@@ -682,7 +649,7 @@ def process_for_slots(img):
     """
     cut_board_contour = find_board_contour(img)
     cut_board_img = get_cut_contour(cut_board_contour, img)
-    cut_board_img = process_img(cut_board_img, 65)
+    cut_board_img = process_img(cut_board_img, 95) # this value is 65 for darker images
     cut_board_img = black_background(cut_board_img, cut_board_contour)
     cv2.drawContours(cut_board_img, [cut_board_contour], -1, (0, 0, 0), 2)
     return cut_board_img
@@ -695,6 +662,7 @@ def process_img(img, threshold_value):
     :param threshold_value:
     :return: the theshold of the given image
     """
+
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # blurred_img = cv2.medianBlur(gray_img, 5)
     # edged_img = cv2.Canny(blurred_img, 63, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
@@ -816,6 +784,46 @@ def check_centers(slotpieces, puzzlepieces):
             return False
     return True
 
+def init_pieces_and_slots(img):
+    """
+    method to init all puzzlepieces and slotpieces of the given image. This method will process and the image and it will retrieve and store all relevant information
+    inside the PuzzlePiece and the SlotPiece objects.
+    :param img: the original image
+    :return: lists of puzzlepieces and slotpieces
+    """
+    slot_contours = get_slot_contours(img)
+    piece_contours = get_piece_contours(process_img(img, 50))
+
+    puzzlepieces = []
+    slotpieces = []
+    for i in range(len(piece_contours)):
+        # initializing puzzlepiece
+        match_contour = find_match(piece_contours[i], slot_contours)
+        puzzlepiece = PuzzlePiece(piece_contours[i], get_handle_coordinates(piece_contours[i], img),
+                                  SlotPiece(match_contour, None))
+
+        # initializing slotpiece
+        slotpiece = puzzlepiece.match
+        slotpiece.match = puzzlepiece
+        puzzlepiece.match = slotpiece
+        puzzlepiece.angle = get_piece_angle(puzzlepiece)
+        adjust_angle(puzzlepiece, img)
+
+        puzzlepiece.angle = (puzzlepiece.angle + 360) % 360
+
+        slotpiece.center = get_slot_center(slotpiece)
+        slotpieces.append(slotpiece)
+        puzzlepieces.append(puzzlepiece)
+
+    return puzzlepieces, slotpieces
+
+normal_image = cv2.imread("images/image.jpg")
+thresh = process_img(normal_image, 120)
+show(thresh)
+puzzlepieces, slotpieces = init_pieces_and_slots(normal_image)
+print(check_initialization(puzzlepieces, slotpieces))
+
+show_matches(puzzlepieces, normal_image)
 
 
 ################ COORDINATE TEST ################
