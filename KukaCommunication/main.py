@@ -78,10 +78,10 @@ class PuzzleSolver:
     def __init__(self):
         self.kukaRemote = RemoteControlKUKA()
 
-        self.z_Pick = -7
+        self.z_Pick = -27
         self.z_Travel = -40
         self.z_Place = -15
-        self.z_Default = -100
+        self.z_Default = -179.5
 
         self.convertCoordiante = 1/(2.3022)
 
@@ -89,7 +89,7 @@ class PuzzleSolver:
         self.DEFAULT_C = 0
 
         self.defaultAngle = 0
-        self.defaultPosition = (1, 1)
+        self.defaultPosition = (0,0)
         self.currentPosition = self.defaultPosition[0]
 
     def __createKUKA_CMD(self, xy, z, angle):
@@ -104,13 +104,20 @@ class PuzzleSolver:
             pass
         self.currentPosition = xy
 
-    def pick(self, xy,angle=0):
+    def pick(self, xy, angle=0):
         self.__go2Position(self.currentPosition, self.z_Travel, self.defaultAngle)
         self.__go2Position(xy, self.z_Travel, self.defaultAngle)
         self.kukaRemote.open_grp(False)
         self.__go2Position(xy, self.z_Pick, self.defaultAngle)
-        self.kukaRemote.open_grp(True)
+        #self.kukaRemote.open_grp(True)
+        #self.__go2Position(xy, self.z_Travel, angle)
+        pass
+
+    def place(self, xy,angle):
         self.__go2Position(xy, self.z_Travel, angle)
+        self.__go2Position(xy, self.z_Place, angle)
+        self.kukaRemote.open_grp(False)
+        self.__go2Position(xy, self.z_Travel, self.defaultAngle)
         pass
 
     def go2Origin(self):
@@ -123,7 +130,23 @@ class PuzzleSolver:
 if __name__ == '__main__':
     kuka = PuzzleSolver()
     kuka.go2Origin()
-    #kuka.pick(xy=(1000, 500))
+    kuka.kukaRemote.open_grp(True)
+    #kuka.pick(xy=(923, 710), angle=0)
+    input()
+
+    #kuka.pick(xy=(91,653), angle=0)
+    input()
+
+    #kuka.pick(xy=(520,393), angle=0)
+    input()
+
+    #kuka.pick(xy=(93,109), angle=0)
+    input()
+
+    #kuka.pick(xy=(935,94), angle=0)
+    input()
+
+    #kuka.place(xy=(905, 372), angle=-58.2939)
 
 #    rck = RemoteControlKUKA()
 #    open_grp = True
