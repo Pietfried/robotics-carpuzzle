@@ -190,7 +190,7 @@ while(nRet == ueye.IS_SUCCESS):
     #---------------------------------------------------------------------------------------------------------------------------------------
 
     #...and finally display it
-    cv2.imshow("SimpleLive_Python_uEye_OpenCV", frame)
+    cv2.imshow("SimpleLive_Pythoqn_uEye_OpenCV", frame)
 
     # Press q if you want to end the loop
     if cv2.waitKey(1) & 0xFF == ord('q'):

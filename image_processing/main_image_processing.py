@@ -158,9 +158,11 @@ def get_piece_contours(img):
     :param img: the image.
     :return: the contours of the pieces
     """
-    img = (img - 255)
+
+    #img = (img - 255)
     piece_contours = []
-    all_contours = get_contours_external(img)
+    all_contours = get_contours_ccomp(img)
+
     board_area = get_board_area(all_contours[find_board_contour_idx(all_contours)])
     for contour in all_contours:
         if (cv2.contourArea(contour) > 10000
