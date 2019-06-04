@@ -46,7 +46,7 @@ class RemoteControlKUKA:
         self._write("COM_ACTION", str(a))
 
     def _wait(self, wait=True):
-        while (wait and not rck.is_idle()):
+        while (wait and not self.is_idle()):
             time.sleep(0.1)
 
     def move_lin_e6pos(self, e6pos, block=True):
@@ -58,7 +58,6 @@ class RemoteControlKUKA:
         self._set_e6pos(e6pos)
         self._set_action("PTP_E6POS")
         self._wait(block)
-
 
     def open_grp(self,open):
         # green valve closed with out2
@@ -75,15 +74,73 @@ class RemoteControlKUKA:
 
         self._set_action("Gripper")
 
+class PuzzleSolver:
+    def __init__(self):
+        self.kukaRemote = RemoteControlKUKA()
+
+        self.z_Pick = -7
+        self.z_Travel = -40
+        self.z_Place = -15
+        self.z_Default = -100
+
+        self.convertCoordiante = 1/(2.3022)
+
+        self.DEFAULT_B = 0
+        self.DEFAULT_C = 0
+
+        self.defaultAngle = 0
+        self.defaultPosition = (1, 1)
+        self.currentPosition = self.defaultPosition[0]
+
+    def __createKUKA_CMD(self, xy, z, angle):
+        strCoord = '{X ' + str(xy[0] * self.convertCoordiante) + ',Y ' + str(xy[1] * self.convertCoordiante) + ',Z ' + str(z)
+        strAngle = ',A ' + str(angle) + ' ,B ' + str(self.DEFAULT_B) + ',C ' + str(self.DEFAULT_C) + '}'
+        return strCoord + strAngle
+
+    def __go2Position(self,xy,z,angle):
+        position = self.__createKUKA_CMD(xy,z,angle)
+        self.kukaRemote.move_lin_e6pos(position)
+        while not self.kukaRemote.is_idle():
+            pass
+        self.currentPosition = xy
+
+    def pick(self, xy,angle=0):
+        self.__go2Position(self.currentPosition, self.z_Travel, self.defaultAngle)
+        self.__go2Position(xy, self.z_Travel, self.defaultAngle)
+        self.kukaRemote.open_grp(False)
+        self.__go2Position(xy, self.z_Pick, self.defaultAngle)
+        self.kukaRemote.open_grp(True)
+        self.__go2Position(xy, self.z_Travel, angle)
+        pass
+
+    def go2Origin(self):
+        self.kukaRemote.open_grp(False)
+        self.__go2Position(self.defaultPosition, self.z_Default, self.defaultAngle)
+        pass
+
+
 
 if __name__ == '__main__':
-    rck = RemoteControlKUKA()
-    open_grp = True
-    default_Axis = ',A -175.18,B 0,C -180,S 6,T 27,E1 0.0,E2 0.0,E3 0.0,E4 0.0,E5 0.0,E6 0.0}'
+    kuka = PuzzleSolver()
+    kuka.go2Origin()
+    #kuka.pick(xy=(1000, 500))
 
-    while True:
-        time.sleep(1)
-        rck.open_grp(open_grp)
-        open_grp = not open_grp
-        rck.move_lin_e6pos('{X 0,Y 0,Z 0' + default_Axis)
+#    rck = RemoteControlKUKA()
+#    open_grp = True
+#    default_Axis = ',A -175.18,B 0,C -180,S 6,T 27,E1 0.0,E2 0.0,E3 0.0,E4 0.0,E5 0.0,E6 0.0}'####
+
+#    rck.move_lin_e6pos('{X 340,Y 225,Z -10,A -10,B 0,C 0}')
+#    rck.open_grp(True)
+#    rck.move_lin_e6pos('{X 340,Y 225,Z -40,A -10,B 0,C 0}')
+#    rck.move_lin_e6pos('{X 50.1234,Y 50.1234,Z -40,A -10,B 0,C 0}')
+#    rck.move_lin_e6pos('{X 50.1234,Y 50.1234,Z -7,A 0,B 0,C 0}')
+#    rck.open_grp(False)
+#    rck.move_lin_e6pos('{X 50.1234,Y 50.1234,Z -40,A 0,B 0,C 0}')
+#    time.sleep(1)
+#    rck.move_lin_e6pos('{X 50.1234,Y 50.1234,Z -7,A 0,B 0,C 0}')
+#    rck.open_grp(True)
+#    rck.move_lin_e6pos('{X 50.1234,Y 50.1234,Z -40,A 0,B 0,C 0}')
+#    rck.move_lin_e6pos('{X 340,Y 225,Z -40,A -10,B 0,C 0}')
+#    rck.move_lin_e6pos('{X 340,Y 225,Z -15,A -10,B 0,C 0}')
+#    rck.open_grp(False)
 
