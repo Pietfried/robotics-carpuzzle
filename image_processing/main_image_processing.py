@@ -162,7 +162,8 @@ def get_piece_contours(img):
     all_contours = get_contours_external(img)
     board_area = get_board_area(all_contours[find_board_contour_idx(all_contours)])
     for contour in all_contours:
-        if (cv2.contourArea(contour) > 10000 and cv2.contourArea(contour) < board_area and cv2.contourArea(
+        if (cv2.contourArea(contour) >
+                and cv2.contourArea(contour) < board_area and cv2.contourArea(
                 contour) > 0):
             piece_contours.append(contour)
     return piece_contours
@@ -817,53 +818,44 @@ def init_pieces_and_slots(img):
 
     return puzzlepieces, slotpieces
 
-normal_image = cv2.imread("images/image.jpg")
-thresh = process_img(normal_image, 120)
-show(thresh)
-puzzlepieces, slotpieces = init_pieces_and_slots(normal_image)
-print(check_initialization(puzzlepieces, slotpieces))
-
-show_matches(puzzlepieces, normal_image)
-
-
 ################ COORDINATE TEST ################
 
-### 1 mm = 2.3 pixel
+## 1 mm = 2.3 pixel
 
-# normal_img = cv2.imread('images/coordinate_test1.jpg')
-# img = process_img(normal_img, 50)
-# contours = get_contours_external_simple(img)
-#
-# new_contours = []
-# for contour in contours:
-#
-#     if (cv2.arcLength(contour, True) > 22 and cv2.arcLength(contour, True) < 24):
-#         print(cv2.arcLength(contour, True))
-#         new_contours.append(contour)
-#
-# print(len(new_contours))
-#
-# contour1 = new_contours[5]
-# contour2 = new_contours[6]
-#
-# center1 = find_center(contour1)
-# center2 = find_center(contour2)
-#
-# draw_contours([contour1, contour2], normal_img)
-#
-#
-# print("Distance:", get_distance(center1, center2))
-#
-# contour1 = new_contours[6]
-# contour2 = new_contours[2]
-#
-# center1 = find_center(contour1)
-# center2 = find_center(contour2)
-# print("Distance:", get_distance(center1, center2))
-#
-#
-# draw_contours([contour1, contour2], normal_img)
-#
-# show(normal_img)
-#
+normal_img = cv2.imread('images/old_images/coordinate_test1.jpg')
+img = process_img(normal_img, 50)
+contours = get_contours_external(img)
+
+new_contours = []
+for contour in contours:
+
+    if (cv2.arcLength(contour, True) > 22 and cv2.arcLength(contour, True) < 24):
+        print(cv2.arcLength(contour, True))
+        new_contours.append(contour)
+
+print(len(new_contours))
+
+contour1 = new_contours[5]
+contour2 = new_contours[6]
+
+center1 = find_center(contour1)
+center2 = find_center(contour2)
+
+draw_contours([contour1, contour2], normal_img)
+
+
+print("Distance:", get_distance(center1, center2))
+
+contour1 = new_contours[6]
+contour2 = new_contours[2]
+
+center1 = find_center(contour1)
+center2 = find_center(contour2)
+print("Distance:", get_distance(center1, center2))
+
+
+draw_contours([contour1, contour2], normal_img)
+
+show(normal_img)
+
 
