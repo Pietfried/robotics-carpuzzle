@@ -22,6 +22,7 @@ class PuzzlePiece:
         """
         method to pretty print the puzzlepiece.
         """
+        print("type: piece")
         if self.contour is not None:
             print("Contour: found")
         else:
@@ -47,12 +48,12 @@ class SlotPiece:
         :return:
         :rtype:
         """
+        print("type: slot")
         if self.contour is not None:
             print("Contour: found")
         else:
             print("Contour: not found")
         print("center:", self.center)
-        print("angle:", self.angle)
 
 def show(img):
     """
@@ -162,7 +163,7 @@ def get_piece_contours(img):
     all_contours = get_contours_external(img)
     board_area = get_board_area(all_contours[find_board_contour_idx(all_contours)])
     for contour in all_contours:
-        if (cv2.contourArea(contour) >
+        if (cv2.contourArea(contour) > 10000
                 and cv2.contourArea(contour) < board_area and cv2.contourArea(
                 contour) > 0):
             piece_contours.append(contour)
@@ -785,6 +786,12 @@ def check_centers(slotpieces, puzzlepieces):
             return False
     return True
 
+def pretty_print(puzzlepieces):
+    for piece in puzzlepieces:
+        piece.pretty_print()
+        piece.match.pretty_print()
+        print("****************************")
+
 def init_pieces_and_slots(img):
     """
     method to init all puzzlepieces and slotpieces of the given image. This method will process and the image and it will retrieve and store all relevant information
@@ -820,42 +827,6 @@ def init_pieces_and_slots(img):
 
 ################ COORDINATE TEST ################
 
-## 1 mm = 2.3 pixel
 
-normal_img = cv2.imread('images/old_images/coordinate_test1.jpg')
-img = process_img(normal_img, 50)
-contours = get_contours_external(img)
-
-new_contours = []
-for contour in contours:
-
-    if (cv2.arcLength(contour, True) > 22 and cv2.arcLength(contour, True) < 24):
-        print(cv2.arcLength(contour, True))
-        new_contours.append(contour)
-
-print(len(new_contours))
-
-contour1 = new_contours[5]
-contour2 = new_contours[6]
-
-center1 = find_center(contour1)
-center2 = find_center(contour2)
-
-draw_contours([contour1, contour2], normal_img)
-
-
-print("Distance:", get_distance(center1, center2))
-
-contour1 = new_contours[6]
-contour2 = new_contours[2]
-
-center1 = find_center(contour1)
-center2 = find_center(contour2)
-print("Distance:", get_distance(center1, center2))
-
-
-draw_contours([contour1, contour2], normal_img)
-
-show(normal_img)
-
+## 1 mm = 2.3022 pixel
 
