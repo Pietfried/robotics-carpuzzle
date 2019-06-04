@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="4f36117b-95f1-468e-bca0-be6172fddb6d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/git repository.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/git repository.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/KukaCommunication/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/KukaCommunication/main.py" afterDir="false" />
+=======
+    <list default="true" id="fd467281-cc12-451d-8ef4-9bf0102a8b95" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/image_processing/camera_control.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_processing/main_image_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_processing/main_image_processing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_processing/program.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_processing/program.py" afterDir="false" />
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +24,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/image_processing/ueye_camera.py">
           <provider selected="true" editor-type-id="text-editor" />
@@ -26,6 +35,13 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="452">
               <caret line="849" column="33" selection-start-line="849" selection-start-column="33" selection-end-line="849" selection-end-column="33" />
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/image_processing/main_image_processing.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="447">
+              <caret line="828" selection-start-line="828" selection-end-line="828" />
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -34,32 +50,45 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/KukaCommunication/py_openshowvar.py">
+        <entry file="file://$PROJECT_DIR$/image_processing/program.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="374">
               <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
+=======
+            <state>
+              <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/KukaCommunication/__init__.py">
+        <entry file="file://$PROJECT_DIR$/image_processing/sort.py">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/KukaCommunication/main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="510">
               <caret line="125" column="29" lean-forward="true" selection-start-line="125" selection-start-column="29" selection-end-line="125" selection-end-column="29" />
+=======
+        <entry file="file://$PROJECT_DIR$/image_processing/ueye_camera.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="205" selection-start-line="205" selection-end-line="211" selection-end-column="23" />
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#2732#2755#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+<<<<<<< HEAD
         <entry file="file://P:/Users/2019/CarPuzzle/Desktop/git repository/KukaCommunication/main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
@@ -73,14 +102,27 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="34">
               <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="47" />
+=======
+        <entry file="file://$PROJECT_DIR$/image_processing/camera_control.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="406">
+              <caret line="110" column="4" selection-start-line="110" selection-start-column="4" selection-end-line="110" selection-end-column="4" />
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
               <folding>
-                <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#0#23#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -90,7 +132,12 @@
       <find>show_mat</find>
       <find>process_img</find>
       <find>circle</find>
+<<<<<<< HEAD
       <find>z</find>
+=======
+      <find>find_center</find>
+      <find>print(</find>
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -101,6 +148,7 @@
       <list>
         <option value="$PROJECT_DIR$/image_processing/program.py" />
         <option value="$PROJECT_DIR$/image_processing/main_image_processing.py" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/KukaCommunication/main.py" />
         <option value="P:/Users/2019/CarPuzzle/Desktop/git repository/KukaCommunication/main.py" />
       </list>
@@ -113,6 +161,9 @@
         <option value="$PROJECT_DIR$/.idea/vcs.xml" />
         <option value="$PROJECT_DIR$/.idea/misc.xml" />
         <option value="$PROJECT_DIR$/.idea/modules.xml" />
+=======
+        <option value="$PROJECT_DIR$/image_processing/camera_control.py" />
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
       </list>
     </option>
   </component>
@@ -127,28 +178,23 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="git repository" type="b2602c69:ProjectViewProjectNode" />
-              <item name="git repository" type="462c0819:PsiDirectoryNode" />
+              <item name="repository" type="b2602c69:ProjectViewProjectNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="git repository" type="b2602c69:ProjectViewProjectNode" />
-              <item name="git repository" type="462c0819:PsiDirectoryNode" />
+              <item name="repository" type="b2602c69:ProjectViewProjectNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
               <item name="image_processing" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="git repository" type="b2602c69:ProjectViewProjectNode" />
-              <item name="git repository" type="462c0819:PsiDirectoryNode" />
-              <item name="KukaCommunication" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -173,7 +219,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4f36117b-95f1-468e-bca0-be6172fddb6d" name="Default Changelist" comment="" />
+      <changelist id="fd467281-cc12-451d-8ef4-9bf0102a8b95" name="Default Changelist" comment="" />
       <created>1559035153330</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -182,10 +228,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="1392" y="-8" width="1416" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16473149" />
+=======
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24920969" />
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -196,19 +249,36 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
+<<<<<<< HEAD
       <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.23180291" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32922733" />
+=======
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32900432" />
+      <window_info anchor="bottom" id="Python Console" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://P:/Users/2019/CarPuzzle/Desktop/git repository/image_processing/main_image_processing.py">
+=======
+    <entry file="file://P:/Users/2019/CarPuzzle/Desktop/git repository/image_processing/main_image_processing.py" />
+    <entry file="file://$PROJECT_DIR$/KukaCommunication/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/KukaCommunication/main.py">
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="660" column="7" lean-forward="true" selection-start-line="655" selection-end-line="661" />
+        <state relative-caret-position="219">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -224,34 +294,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/image_processing/program.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="34">
           <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="47" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
+=======
+        <state>
+          <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/KukaCommunication/py_openshowvar.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/sort.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/pyueye/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/image_processing/main_image_processing.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="452">
           <caret line="849" column="33" selection-start-line="849" selection-start-column="33" selection-end-line="849" selection-end-column="33" />
+=======
+        <state relative-caret-position="447">
+          <caret line="828" selection-start-line="828" selection-end-line="828" />
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/KukaCommunication/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="125" column="29" lean-forward="true" selection-start-line="125" selection-start-column="29" selection-end-line="125" selection-end-column="29" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/image_processing/ueye_camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="205" selection-start-line="205" selection-end-line="211" selection-end-column="23" />
+          <folding>
+            <element signature="e#2732#2755#0" expanded="true" />
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/image_processing/ueye_camera.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -259,6 +362,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="83" column="28" selection-start-line="83" selection-start-column="28" selection-end-line="83" selection-end-column="28" />
+=======
+    <entry file="file://$PROJECT_DIR$/image_processing/camera_control.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="110" column="4" selection-start-line="110" selection-start-column="4" selection-end-line="110" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+>>>>>>> e47fc0bdcd8f0690723ccd6d77fa162eda3edbc4
         </state>
       </provider>
     </entry>

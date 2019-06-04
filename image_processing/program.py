@@ -1,13 +1,15 @@
 import cv2
 import main_image_processing
 
-normal_image = cv2.imread("images/image19.jpg")
+normal_image = cv2.imread("images/image21.jpg")
 puzzlepieces, slotpieces = main_image_processing.init_pieces_and_slots(normal_image)
 
 main_image_processing.show_matches(puzzlepieces, normal_image)
 
 v = main_image_processing.check_initialization(puzzlepieces, slotpieces)
 print("succesful:", v)
+
+main_image_processing.pretty_print(puzzlepieces)
 
 # if (main_image_processing.check_initialization(puzzlepieces, slotpieces)):
 #     i = 1
