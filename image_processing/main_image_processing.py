@@ -2,6 +2,12 @@ import cv2
 import numpy as np
 import math
 
+#GLOBAL VARIABLES
+
+DISTANCE_CAMERA_TO_BUTTOM = 23920 # 104cm
+HANDLE_HEIGHT = 460 # 2cm
+IMAGE_CENTER = (512, 384)
+
 # Classes
 class PuzzlePiece:
     def __init__(self, contour, handle_center, match, angle=None):
@@ -325,7 +331,9 @@ def get_handle_coordinates(contour, img):
     """
     handle_circle = get_handle_circle(contour, img)
     if handle_circle is not None:
-        return (find_center(handle_circle))
+        wrong_center = find_center(handle_circle)
+        correct_center = correctParallaxEffect(wrong_center)
+        return correct_center
     else:
         return (0,0)
 
@@ -338,6 +346,18 @@ def show_handle_circles(puzzlepieces, img):
     for piece in puzzlepieces:
         contour = get_handle_circle(piece.contour, img)
         draw_contours([contour], img)
+
+    show(img)
+
+def show_handle_centers(puzzlepieces, img):
+    for piece in puzzlepieces:
+        cv2.circle(img, piece.handle_center, 1, (0,255,255), 0)
+
+    show(img)
+
+def show_slot_centers(slots, img):
+    for slot in slots:
+        cv2.circle(img, slot.center, 1, (0,255,255), 0)
 
     show(img)
 
@@ -794,6 +814,26 @@ def pretty_print(puzzlepieces):
         piece.match.pretty_print()
         print("****************************")
 
+def correctParallaxEffect(wrong_center):
+    distance_center_to_handle_center = get_distance(IMAGE_CENTER, wrong_center)
+    parallaxError = (distance_center_to_handle_center / DISTANCE_CAMERA_TO_BUTTOM) * HANDLE_HEIGHT
+    point_difference = get_point_difference(IMAGE_CENTER, wrong_center)
+
+    directionVector = normalize_vector(point_difference)
+
+    correctionVector  = (parallaxError*directionVector[0], parallaxError*directionVector[1])
+    corrected_handle_center = add_points(wrong_center, correctionVector)
+    return (int(corrected_handle_center[0]), int(corrected_handle_center[1]))
+
+def normalize_vector(vector):
+    amount = math.sqrt(vector[0]**2 + vector[1]**2)
+    correctionVector = (vector[0]/amount, vector[1]/amount)
+    return correctionVector
+
+
+
+    pass
+
 def init_pieces_and_slots(img):
     """
     method to init all puzzlepieces and slotpieces of the given image. This method will process and the image and it will retrieve and store all relevant information
@@ -829,6 +869,13 @@ def init_pieces_and_slots(img):
 
 ################ COORDINATE TEST ################
 
+if __name__ == '__main__':
+    img = cv2.imread('images/image15.jpg')
 
-## 1 mm = 2.3022 pixel
+    puzzlepieces, slots = init_pieces_and_slots(img)
 
+    show_handle_centers(puzzlepieces, img)
+    for piece in puzzlepieces:
+        cv2.circle(img, find_center(piece.contour), 1, (255,0,0), 0)
+
+    show_slot_centers(slots, img)
