@@ -4,7 +4,7 @@ import math
 
 #GLOBAL VARIABLES
 
-DISTANCE_CAMERA_TO_BUTTOM = 23920 # 104cm
+DISTANCE_CAMERA_TO_BUTTOM = 27624 # 120cm
 HANDLE_HEIGHT = 460 # 2cm
 IMAGE_CENTER = (512, 384)
 
@@ -60,6 +60,10 @@ class SlotPiece:
         else:
             print("Contour: not found")
         print("center:", self.center)
+
+class IMG_Processing:
+    def __init__(self):
+        pass
 
 def show(img):
     """
@@ -333,6 +337,7 @@ def get_handle_coordinates(contour, img):
     if handle_circle is not None:
         wrong_center = find_center(handle_circle)
         correct_center = correctParallaxEffect(wrong_center)
+
         return correct_center
     else:
         return (0,0)
@@ -867,15 +872,8 @@ def init_pieces_and_slots(img):
 
     return puzzlepieces, slotpieces
 
-################ COORDINATE TEST ################
-
 if __name__ == '__main__':
-    img = cv2.imread('images/image15.jpg')
-
+    img = cv2.imread('C:/Users/CarPuzzle/Desktop/git repository/image_processing/images/image35.jpg')
     puzzlepieces, slots = init_pieces_and_slots(img)
 
     show_handle_centers(puzzlepieces, img)
-    for piece in puzzlepieces:
-        cv2.circle(img, find_center(piece.contour), 1, (255,0,0), 0)
-
-    show_slot_centers(slots, img)

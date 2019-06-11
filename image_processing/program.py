@@ -1,5 +1,5 @@
 import cv2
-import main_image_processing
+from image_processing import main_image_processing
 
 normal_image = cv2.imread("images/image.jpg")
 #puzzlepieces, slotpieces = main_image_processing.init_pieces_and_slots(normal_image)
