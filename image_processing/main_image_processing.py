@@ -870,12 +870,10 @@ def init_pieces_and_slots(img):
 ################ COORDINATE TEST ################
 
 if __name__ == '__main__':
-    img = cv2.imread('images/image15.jpg')
+    img = cv2.imread('images/image23.jpg')
 
     puzzlepieces, slots = init_pieces_and_slots(img)
 
-    show_handle_centers(puzzlepieces, img)
-    for piece in puzzlepieces:
-        cv2.circle(img, find_center(piece.contour), 1, (255,0,0), 0)
+    print(check_initialization(puzzlepieces, slots))
 
-    show_slot_centers(slots, img)
+    show_handle_centers(puzzlepieces, img)
