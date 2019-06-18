@@ -1,27 +1,27 @@
 import cv2
-from image_processing import main_image_processing
+from image_processing import puzzle_image_processing
 
 normal_image = cv2.imread("images/image.jpg")
 #puzzlepieces, slotpieces = main_image_processing.init_pieces_and_slots(normal_image)
 
-piece_contours = main_image_processing.get_piece_contours(main_image_processing.process_img(normal_image, 50))
+piece_contours = puzzle_image_processing.get_piece_contours(puzzle_image_processing.process_img(normal_image, 50))
 
 #main_image_processing.show_contours_onebyone()
 
 print(len(piece_contours))
 
-main_image_processing.draw_contours(piece_contours, normal_image)
-main_image_processing.show(normal_image)
+puzzle_image_processing.draw_contours(piece_contours, normal_image)
+puzzle_image_processing.show(normal_image)
 
 for contour in piece_contours:
-    handle_center = main_image_processing.get_handle_coordinates(contour, normal_image)
+    handle_center = puzzle_image_processing.get_handle_coordinates(contour, normal_image)
     print("coordinate:", handle_center)
 
 for contour in piece_contours:
-    contour = main_image_processing.get_handle_circle(contour, normal_image)
-    main_image_processing.draw_contours([contour], normal_image)
+    contour = puzzle_image_processing.get_handle_circle(contour, normal_image)
+    puzzle_image_processing.draw_contours([contour], normal_image)
 
-main_image_processing.show(normal_image)
+puzzle_image_processing.show(normal_image)
 
 
 # if (main_image_processing.check_initialization(puzzlepieces, slotpieces)):

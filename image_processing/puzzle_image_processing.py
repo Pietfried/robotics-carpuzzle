@@ -404,7 +404,7 @@ def get_mask_image(piece, img):
     :return: an image of the piece in a masked image
     """
     croped = get_cropped_contour(piece, img)
-    mask = np.zeros((512, 512, 3), np.uint8)
+    mask = np.zeros((1024,768, 4), np.uint8)
     x_offset = y_offset = 200
 
     mask[y_offset:y_offset + croped.shape[0], x_offset:x_offset + croped.shape[1]] = croped
@@ -601,9 +601,9 @@ def get_overlay_area(puzzlepiece, angle, img):
 
     img = process_img(img, 20)
     img = (255 - img)
+
     overall_contour = get_contours_external(img)
 
-    overall_img = draw_contours_to_mask([overall_contour])
     overall_contour_area = cv2.contourArea(overall_contour[0], True)
 
     return overall_contour_area
@@ -630,7 +630,7 @@ def draw_overlaying_contours_to_mask(contours, offset):
     :return: the contours in a mask
     """
     assert len(contours) == 2
-    img = np.zeros((512, 512, 3), np.uint8)
+    img = np.zeros((1024, 768, 3), np.uint8)
     cv2.drawContours(img, contours[0], -1, (0, 255, 0), 2)
     cv2.drawContours(img, contours[1], -1, (0, 255, 0), 2, offset=offset)
 
@@ -873,7 +873,9 @@ def init_pieces_and_slots(img):
     return puzzlepieces, slotpieces
 
 if __name__ == '__main__':
-    img = cv2.imread('C:/Users/CarPuzzle/Desktop/git repository/image_processing/images/image35.jpg')
+    img = cv2.imread('C:/Users/CarPuzzle/Desktop/git repository/image_processing/images/image.jpg')
     puzzlepieces, slots = init_pieces_and_slots(img)
 
-    show_handle_centers(puzzlepieces, img)
+    print(check_initialization(puzzlepieces, slots))
+    print(len(puzzlepieces) == 0)
+
