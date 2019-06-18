@@ -31,7 +31,7 @@
 # Developer Note: I tried to let it as simple as possible.
 # Therefore there are no functions asking for the newest driver software or freeing memory beforehand, etc.
 # The sole purpose of this program is to show one of the simplest ways to interact with an IDS camera via the uEye API.
-# (XS cameras are not supported)
+# (XS cameras are not supported)q
 #---------------------------------------------------------------------------------------------------------------------------------------
 
 #Libraries

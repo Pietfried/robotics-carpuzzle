@@ -4,7 +4,7 @@ import math
 
 #GLOBAL VARIABLES
 
-DISTANCE_CAMERA_TO_BUTTOM = 23920 # 104cm
+DISTANCE_CAMERA_TO_BUTTOM = 27624 # 120cm
 HANDLE_HEIGHT = 460 # 2cm
 IMAGE_CENTER = (512, 384)
 
@@ -60,6 +60,10 @@ class SlotPiece:
         else:
             print("Contour: not found")
         print("center:", self.center)
+
+class IMG_Processing:
+    def __init__(self):
+        pass
 
 def show(img):
     """
@@ -333,6 +337,7 @@ def get_handle_coordinates(contour, img):
     if handle_circle is not None:
         wrong_center = find_center(handle_circle)
         correct_center = correctParallaxEffect(wrong_center)
+
         return correct_center
     else:
         return (0,0)
@@ -398,11 +403,11 @@ def get_mask_image(piece, img):
     :param img:
     :return: an image of the piece in a masked image
     """
-    croped = get_cropped_contour(piece, img)
+    cropped = get_cropped_contour(piece, img)
     mask = np.zeros((512, 512, 3), np.uint8)
     x_offset = y_offset = 200
 
-    mask[y_offset:y_offset + croped.shape[0], x_offset:x_offset + croped.shape[1]] = croped
+    mask[y_offset:y_offset + cropped.shape[0], x_offset:x_offset + cropped.shape[1]] = cropped
 
     return mask
 
@@ -524,7 +529,7 @@ def get_rect(contour):
     return cv2.minAreaRect(contour)
 
 
-def process_croped(img):
+def process_cropped(img):
     """
     method to process a cropped image. This method is used to find the handle circles.
     :param img: the image containing only one puzzlepiece
@@ -556,12 +561,12 @@ def get_cropped_contour(piece, img):
     method to get the cropped image of the piece contour
     :param piece:
     :param img:
-    :return: the croped image of the piece contour
+    :return: the cropped image of the piece contour
     """
     cut_piece_img = get_cut_contour(piece.contour, img)
     x, y, w, h = cv2.boundingRect(piece.contour)
-    croped = cut_piece_img[y:y + h, x:x + w]
-    return croped
+    cropped = cut_piece_img[y:y + h, x:x + w]
+    return cropped
 
 
 def get_overlay_area(puzzlepiece, angle, img):
@@ -579,7 +584,7 @@ def get_overlay_area(puzzlepiece, angle, img):
     draw_contours(contours_puzzlepiece, rotated_img)
 
     slot_img = get_mask_image(puzzlepiece.match, img)
-    processed = process_croped(slot_img)
+    processed = process_cropped(slot_img)
     contours_slotpiece = get_contours_external(processed)
     draw_contours(contours_slotpiece, slot_img)
 
@@ -774,7 +779,6 @@ def shift_contour(contour, center):
         new_contour[i][0] = add_points(new_contour[i][0], center)
     return new_contour
 
-
 def add_points(point1, point2):
     """
     method to add two points
@@ -867,13 +871,39 @@ def init_pieces_and_slots(img):
 
     return puzzlepieces, slotpieces
 
-################ COORDINATE TEST ################
+def overlay_piece_to_slot(piece):
+    contour = rotate_contour(piece.contour, piece.angle)
+    contour = shift_contour(contour, find_center(piece.match.contour))
+
+    return contour
+
+def draw_point(coordinate, img, color):
+    cv2.circle(img, (int(coordinate[0]), int(coordinate[1])), 1, color, 0)
 
 if __name__ == '__main__':
-    img = cv2.imread('images/image23.jpg')
+    img = cv2.imread('images/blackandwhite.jpg')
+    #puzzlepieces, slots = init_pieces_and_slots(img)
 
-    puzzlepieces, slots = init_pieces_and_slots(img)
+    #for piece in puzzlepieces:
+    #    vector = get_point_difference(find_center(piece.contour), piece.handle_center)
+    #    vector = rotate_vector(vector, piece.angle)
+    #    new_contour = overlay_piece_to_slot(piece)
+    #    point =  add_points(find_center(new_contour), vector)
 
-    print(check_initialization(puzzlepieces, slots))
+    #    draw_point(point, img, (0,255,255))
+    #    draw_point(piece.match.center, img, (0,0,255))
 
-    show_handle_centers(puzzlepieces, img)
+    #show(img)
+
+    show(img)
+    thresh = process_img(img, 130)
+    show(thresh)
+
+    contours = get_contours_ccomp(thresh)
+
+    for contour in contours:
+        length = cv2.arcLength(contour, True)
+        if (length > 300 and length < 350):
+            print(length)
+            draw_contours([contour], img)
+            show(img)

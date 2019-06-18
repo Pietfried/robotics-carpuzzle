@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4f36117b-95f1-468e-bca0-be6172fddb6d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/blackandwhite.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image25.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image26.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image27.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image28.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image29.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image30.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image31.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image32.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image33.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image34.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image35.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image36.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/imageTest.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image_processing/images/image_test2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KukaCommunication/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/KukaCommunication/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_processing/images/image.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/image_processing/images/image_test.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_processing/main_image_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_processing/main_image_processing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_processing/program.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_processing/program.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_processing/ueye_camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_processing/ueye_camera.py" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/image_processing/main_image_processing.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="710">
+              <caret line="906" column="12" selection-start-line="906" selection-start-column="12" selection-end-line="908" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>ndimage</find>
+      <find>init_</find>
+      <find>get_slot_con</find>
+      <find>show_mat</find>
+      <find>process_img</find>
+      <find>circle</find>
+      <find>z</find>
+      <find>path</find>
+      <find>show_con</find>
+      <find>draw</find>
+      <find>show_handle</find>
+      <find>croped</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/image_processing/camera_control.py" />
+        <option value="$PROJECT_DIR$/image_processing/ueye_camera.py" />
+        <option value="P:/Users/2019/CarPuzzle/Desktop/git repository/KukaCommunication/main.py" />
+        <option value="$PROJECT_DIR$/image_processing/program.py" />
+        <option value="$PROJECT_DIR$/KukaCommunication/main.py" />
+        <option value="$PROJECT_DIR$/image_processing/main_image_processing.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="203" />
+    <option name="y" value="-24" />
+    <option name="width" value="1380" />
+    <option name="height" value="970" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="repository" type="b2602c69:ProjectViewProjectNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/KukaCommunication" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\CarPuzzle\Desktop\git repository\KukaCommunication" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.main_image_processing">
+    <configuration name="camera_control" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="git repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/image_processing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/image_processing/camera_control.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="git repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/KukaCommunication" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/KukaCommunication/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="git repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="P:/Users/2019/CarPuzzle/Desktop/git repository/KukaCommunication" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="P:/Users/2019/CarPuzzle/Desktop/git repository/KukaCommunication/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main_image_processing" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\piet.goempel\AppData\Local\Programs\Python\Python37-32\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/image_processing" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/image_processing/main_image_processing.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ueye_camera" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="git repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/image_processing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/image_processing/ueye_camera.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main_image_processing" />
+        <item itemvalue="Python.main (1)" />
+        <item itemvalue="Python.ueye_camera" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.camera_control" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4f36117b-95f1-468e-bca0-be6172fddb6d" name="Default Changelist" comment="" />
+      <created>1559035153330</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1559035153330</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17597471" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32900432" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39977604" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32922733" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32922733" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.23180291" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32922733" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://P:/Users/2019/CarPuzzle/Desktop/git repository/image_processing/main_image_processing.py" />
+    <entry file="file://P:/Users/2019/CarPuzzle/Desktop/git repository/image_processing/camera_control.py" />
+    <entry file="file://$PROJECT_DIR$/KukaCommunication/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/camera_control.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="169" column="63" selection-start-line="169" selection-start-column="63" selection-end-line="169" selection-end-column="63" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/pyueye/ueye.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="986">
+          <caret line="106" column="35" lean-forward="true" selection-start-line="106" selection-start-column="35" selection-end-line="106" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/images/imageTest.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/images/image.jpg" />
+    <entry file="file://$PROJECT_DIR$/image_processing/images/image15.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/images/image20.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/images/image21.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/images/image22.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/images/image23.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/images/image24.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/KukaCommunication/main_image_processing.py" />
+    <entry file="file://P:/Users/2019/CarPuzzle/Desktop/git repository/KukaCommunication/main.py" />
+    <entry file="file://$PROJECT_DIR$/image_processing/program.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="16" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="34" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/KukaCommunication/py_openshowvar.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/ueye_camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="215" lean-forward="true" selection-start-line="215" selection-end-line="215" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/KukaCommunication/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="154" column="88" selection-start-line="154" selection-start-column="88" selection-end-line="154" selection-end-column="88" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/main_image_processing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="710">
+          <caret line="906" column="12" selection-start-line="906" selection-start-column="12" selection-end-line="908" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
