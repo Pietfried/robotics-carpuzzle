@@ -132,7 +132,7 @@ class PuzzleSolver:
 
     def go2Origin(self):
         self.kukaRemote.open_grp(False)
-        self.__go2Position(self.defaultPosition, self.z_Default, self.defaultAngle, ptp=True)
+        self.__go2Position(self.defaultPosition, self.z_Default, self.defaultAngle, ptp=False)
         pass
 
     def convert_angle(self,angle):
