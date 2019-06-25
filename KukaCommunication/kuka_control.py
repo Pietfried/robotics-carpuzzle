@@ -1,7 +1,7 @@
 import time
 import cv2
 from KukaCommunication.py_openshowvar import openshowvar
-from image_processing import main_image_processing as imgp
+from image_processing import puzzle_image_processing as imgp
 
 class RemoteControlKUKA:
 
@@ -80,23 +80,26 @@ class PuzzleSolver:
     def __init__(self):
         self.kukaRemote = RemoteControlKUKA()
 
-        self.z_Pick = -7
-        self.z_Travel = -35
-        self.z_Place = -20
+        self.z_Pick = -10#-150#-7
+        self.z_Travel = -60#-150
+        self.z_Place = -25#-59.5
         self.z_Default = -185#-280
 
         self.convertCoordiante = 1 / (2.3022)
+        self.offset = (5.32, -10.4)
 
         self.DEFAULT_B = 0
         self.DEFAULT_C = 0
 
         self.defaultAngle = 0
         self.defaultPosition = (0, 0)
+
         self.currentPosition = self.defaultPosition
 
     def __createKUKA_CMD(self, xy, z, angle):
-        strCoord = '{X ' + str(xy[0] * self.convertCoordiante) + ',Y ' + str(
-            xy[1] * self.convertCoordiante) + ',Z ' + str(z)
+        xy_offset= (xy[0]+self.offset[0], xy[1]+self.offset[1])
+        strCoord = '{X ' + str(xy_offset[0] * self.convertCoordiante) + ',Y ' + str(
+            xy_offset[1] * self.convertCoordiante) + ',Z ' + str(z)
         strAngle = ',A ' + str(angle) + ' ,B ' + str(self.DEFAULT_B) + ',C ' + str(self.DEFAULT_C) + '}'
         return strCoord + strAngle
 
@@ -115,9 +118,7 @@ class PuzzleSolver:
         self.__go2Position(self.currentPosition, self.z_Travel, self.defaultAngle)
         self.__go2Position(xy, self.z_Travel, self.defaultAngle)
         self.kukaRemote.open_grp(False)
-        input()
         self.__go2Position(xy, self.z_Pick, self.defaultAngle)
-        input()
         self.kukaRemote.open_grp(True)
         self.__go2Position(xy, self.z_Travel, self.defaultAngle)
         pass
@@ -125,14 +126,13 @@ class PuzzleSolver:
     def place(self, xy, angle):
         self.__go2Position(xy, self.z_Travel, angle)
         self.__go2Position(xy, self.z_Place, angle)
-        input()
         self.kukaRemote.open_grp(False)
         self.__go2Position(xy, self.z_Travel, self.defaultAngle)
         pass
 
     def go2Origin(self):
-        #self.kukaRemote.open_grp(False)
-        self.__go2Position(self.defaultPosition, self.z_Default, self.defaultAngle, ptp=True)
+        self.kukaRemote.open_grp(False)
+        self.__go2Position(self.defaultPosition, self.z_Default, self.defaultAngle, ptp=False)
         pass
 
     def convert_angle(self,angle):
@@ -148,21 +148,19 @@ if __name__ == '__main__':
     kuka = PuzzleSolver()
     kuka.go2Origin()
 
-    img = cv2.imread('C:/Users/CarPuzzle/Desktop/git repository/image_processing/images/image36.jpg')
+    img = cv2.imread('C:/Users/CarPuzzle/Desktop/git repository/image_processing/images/image39.jpg')
     puzzlepieces, slots = imgp.init_pieces_and_slots(img)
 
-    kuka.pick(xy=puzzlepieces[5].handle_center)
-    kuka.place(xy=puzzlepieces[5].match.center, angle= kuka.convert_angle(puzzlepieces[5].angle))
-
-    kuka.go2Origin()
-
-    #for piece in puzzlepieces:
-    #    print("img angle: "+str(piece.angle))
-    #    print("kuka angle: "+ str(kuka.convert_angle(piece.angle)))
-    #    kuka.pick(xy=piece.handle_center)
-    #    kuka.place(xy=piece.match.center, angle= kuka.convert_angle(piece.angle))
+    #kuka.pick(xy=puzzlepieces[4].handle_center)
+    #kuka.place(xy=puzzlepieces[4].match.center, angle= kuka.convert_angle(puzzlepieces[4].angle))
 
     #kuka.go2Origin()
+
+    for piece in puzzlepieces:
+        kuka.pick(xy=piece.handle_center)
+        kuka.place(xy=piece.match.center, angle= kuka.convert_angle(piece.angle))
+
+    kuka.go2Origin()
 
     #kuka.pick(xy=(431, 703), angle=0)
     #kuka.pick(xy=(,653), angle=0)

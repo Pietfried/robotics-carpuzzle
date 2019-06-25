@@ -403,8 +403,13 @@ def get_mask_image(piece, img):
     :param img:
     :return: an image of the piece in a masked image
     """
+<<<<<<< HEAD:image_processing/main_image_processing.py
     cropped = get_cropped_contour(piece, img)
     mask = np.zeros((512, 512, 3), np.uint8)
+=======
+    croped = get_cropped_contour(piece, img)
+    mask = np.zeros((1024,768, 4), np.uint8)
+>>>>>>> 1deb72787900200e301eba773455a27ab563ad8f:image_processing/puzzle_image_processing.py
     x_offset = y_offset = 200
 
     mask[y_offset:y_offset + cropped.shape[0], x_offset:x_offset + cropped.shape[1]] = cropped
@@ -601,9 +606,9 @@ def get_overlay_area(puzzlepiece, angle, img):
 
     img = process_img(img, 20)
     img = (255 - img)
+
     overall_contour = get_contours_external(img)
 
-    overall_img = draw_contours_to_mask([overall_contour])
     overall_contour_area = cv2.contourArea(overall_contour[0], True)
 
     return overall_contour_area
@@ -630,7 +635,7 @@ def draw_overlaying_contours_to_mask(contours, offset):
     :return: the contours in a mask
     """
     assert len(contours) == 2
-    img = np.zeros((512, 512, 3), np.uint8)
+    img = np.zeros((1024, 768, 3), np.uint8)
     cv2.drawContours(img, contours[0], -1, (0, 255, 0), 2)
     cv2.drawContours(img, contours[1], -1, (0, 255, 0), 2, offset=offset)
 
@@ -881,6 +886,7 @@ def draw_point(coordinate, img, color):
     cv2.circle(img, (int(coordinate[0]), int(coordinate[1])), 1, color, 0)
 
 if __name__ == '__main__':
+<<<<<<< HEAD:image_processing/main_image_processing.py
     img = cv2.imread('images/blackandwhite.jpg')
     #puzzlepieces, slots = init_pieces_and_slots(img)
 
@@ -907,3 +913,11 @@ if __name__ == '__main__':
             print(length)
             draw_contours([contour], img)
             show(img)
+=======
+    img = cv2.imread('C:/Users/CarPuzzle/Desktop/git repository/image_processing/images/image.jpg')
+    puzzlepieces, slots = init_pieces_and_slots(img)
+
+    print(check_initialization(puzzlepieces, slots))
+    print(len(puzzlepieces) == 0)
+
+>>>>>>> 1deb72787900200e301eba773455a27ab563ad8f:image_processing/puzzle_image_processing.py

@@ -141,46 +141,45 @@ def take_picture(hCam, pcImageMemory, MemID, pitch, nBitsPerPixel, bytes_per_pix
     cv2.destroyAllWindows()
     return frame
 
-if __name__ == "__main__":
+def give_da_stream():
 
     hCam, sInfo, cInfo, pcImageMemory, MemID, rectAOI, pitch, nBitsPerPixel, channels, m_nColorMode, bytes_per_pixel, height, width = init_camera()
 
     nRet = ueye.is_CaptureVideo(hCam, ueye.IS_DONT_WAIT)
     nRet = ueye.is_InquireImageMem(hCam, pcImageMemory, MemID, width, height, nBitsPerPixel, pitch)
 
-    while(nRet == ueye.IS_SUCCESS):
+    try:
 
-        # In order to display the image in an OpenCV window we need to...
-        # ...extract the data of our image memory
-        array = ueye.get_data(pcImageMemory, width, height, nBitsPerPixel, pitch, copy=False)
+        while(nRet == ueye.IS_SUCCESS):
 
-        # bytes_per_pixel = int(nBitsPerPixel / 8)
+            # In order to display the image in an OpenCV window we need to...
+            # ...extract the data of our image memory
+            array = ueye.get_data(pcImageMemory, width, height, nBitsPerPixel, pitch, copy=False)
 
-        # ...reshape it in an numpy array...
-        frame = np.reshape(array, (height.value, width.value, bytes_per_pixel))
+            # bytes_per_pixel = int(nBitsPerPixel / 8)
 
-        # ...resize the image by a half
-        # frame = cv2.resize(frame,(0,0),fx=0.5, fy=0.5)
+            # ...reshape it in an numpy array...
+            frame = np.reshape(array, (height.value, width.value, bytes_per_pixel))
 
-        # Press q if you want to end the loop
+            # ...resize the image by a half
+            # frame = cv2.resize(frame,(0,0),fx=0.5, fy=0.5)
 
-        # Press q if you want to end the loop
+            # Press q if you want to end the loop
 
-        path = 'images/'
-        cv2.imwrite(os.path.join(path, 'imageTest.jpg'), frame)
+            # Press q if you want to end the loop
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-        # ---------------------------------------------------------------------------------------------------------------------------------------
-        # Include image data processing here
+            yield frame
+            # ---------------------------------------------------------------------------------------------------------------------------------------
+            # Include image data processing here
 
-        # ---------------------------------------------------------------------------------------------------------------------------------------
+            # ---------------------------------------------------------------------------------------------------------------------------------------
 
-    # Releases an image memory that was allocated using is_AllocImageMem() and removes it from the driver management
-    ueye.is_FreeImageMem(hCam, pcImageMemory, MemID)
+    finally:
+        # Releases an image memory that was allocated using is_AllocImageMem() and removes it from the driver management
+        ueye.is_FreeImageMem(hCam, pcImageMemory, MemID)
 
-    # Disables the hCam camera handle and releases the data structures and memory areas taken up by the uEye camera
-    ueye.is_ExitCamera(hCam)
+        # Disables the hCam camera handle and releases the data structures and memory areas taken up by the uEye camera
+        ueye.is_ExitCamera(hCam)
 
-    # Destroys the OpenCv windows
-    cv2.destroyAllWindows()
+        # Destroys the OpenCv windows
+        #cv2.destroyAllWindows()

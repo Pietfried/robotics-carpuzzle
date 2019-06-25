@@ -193,10 +193,10 @@ while(nRet == ueye.IS_SUCCESS):
     cv2.imshow("SimpleLive_Pythoqn_uEye_OpenCV", frame)
 
     # Press q if you want to end the loop
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    key = cv2.waitKey(0) & 0xFF
+    if key == ord('q'):
         break
-
-    if cv2.waitKey(1) == ord('p'):
+    elif key == ord('p'):
         path = 'images/'
         cv2.imwrite(os.path.join(path, 'image.jpg'),frame)
         print("Picture has been saved to", path)
