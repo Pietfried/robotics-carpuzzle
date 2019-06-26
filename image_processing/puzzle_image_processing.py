@@ -5,7 +5,7 @@ import math
 #GLOBAL VARIABLES
 
 DISTANCE_CAMERA_TO_BUTTOM = 27624 # 120cm
-HANDLE_HEIGHT = 460 # 2cm
+HANDLE_HEIGHT = 575 # 2,5cm
 IMAGE_CENTER = (512, 384)
 
 # Classes
@@ -82,7 +82,7 @@ def show_contours_onebyone(pieces, img):
     """
     for piece in pieces:
         contour = piece.contour
-        cv2.drawContours(img, [contour], -1, (0, 255, 0), -1)
+        cv2.drawContours(img, [contour], -1, (0, 255, 0), 2)
         cv2.imshow("Contour image", img)
         cv2.waitKey(0)
 
@@ -195,7 +195,7 @@ def get_slot_contours(img):
     contours = get_contours_external(cut_board_img)
 
     for contour in contours:
-        if (cv2.contourArea(contour) > 10000 and cv2.contourArea(contour) > 0):
+        if (cv2.contourArea(contour) > 10000 and cv2.contourArea(contour) > 0): #TODO: adjust constant here.
             slot_contours.append(contour)
     return slot_contours
 
@@ -233,6 +233,7 @@ def show_matches(puzzlepieces, img):
         piece_contour = puzzlepiece.contour
         cv2.drawContours(img, [slot_contour], -1, (0, 255, 0), 2)
         cv2.drawContours(img, [piece_contour], -1, (0, 255, 0), 2)
+
         cv2.imshow("Matches", img)
         cv2.waitKey(0)
 
@@ -403,13 +404,11 @@ def get_mask_image(piece, img):
     :param img:
     :return: an image of the piece in a masked image
     """
-<<<<<<< HEAD:image_processing/main_image_processing.py
     cropped = get_cropped_contour(piece, img)
-    mask = np.zeros((512, 512, 3), np.uint8)
-=======
-    croped = get_cropped_contour(piece, img)
-    mask = np.zeros((1024,768, 4), np.uint8)
->>>>>>> 1deb72787900200e301eba773455a27ab563ad8f:image_processing/puzzle_image_processing.py
+
+    #cropped = cropped[0].shape()
+
+    mask = np.zeros((1024,768, 3), np.uint8) # mask = np.zeros((1024,768, 3), np.uint8)
     x_offset = y_offset = 200
 
     mask[y_offset:y_offset + cropped.shape[0], x_offset:x_offset + cropped.shape[1]] = cropped
@@ -824,14 +823,24 @@ def pretty_print(puzzlepieces):
         print("****************************")
 
 def correctParallaxEffect(wrong_center):
-    distance_center_to_handle_center = get_distance(IMAGE_CENTER, wrong_center)
-    parallaxError = (distance_center_to_handle_center / DISTANCE_CAMERA_TO_BUTTOM) * HANDLE_HEIGHT
+
+    print(IMAGE_CENTER)
+    print(HANDLE_HEIGHT)
+    print(DISTANCE_CAMERA_TO_BUTTOM)
+
+    distance_center_to_handle_center = get_distance(IMAGE_CENTER, wrong_center) #this is a2
+    parallaxError = (distance_center_to_handle_center / DISTANCE_CAMERA_TO_BUTTOM) * HANDLE_HEIGHT #this is a
     point_difference = get_point_difference(IMAGE_CENTER, wrong_center)
 
     directionVector = normalize_vector(point_difference)
 
     correctionVector  = (parallaxError*directionVector[0], parallaxError*directionVector[1])
     corrected_handle_center = add_points(wrong_center, correctionVector)
+
+    print(corrected_handle_center)
+    print(int(corrected_handle_center[0]))
+    print(int(corrected_handle_center[1]))
+
     return (int(corrected_handle_center[0]), int(corrected_handle_center[1]))
 
 def normalize_vector(vector):
@@ -883,41 +892,25 @@ def overlay_piece_to_slot(piece):
     return contour
 
 def draw_point(coordinate, img, color):
-    cv2.circle(img, (int(coordinate[0]), int(coordinate[1])), 1, color, 0)
+    cv2.circle(img, (int(coordinate[0]), int(coordinate[1])), 1, color, -1)
 
 if __name__ == '__main__':
-<<<<<<< HEAD:image_processing/main_image_processing.py
-    img = cv2.imread('images/blackandwhite.jpg')
-    #puzzlepieces, slots = init_pieces_and_slots(img)
+    img = cv2.imread('images\image15.jpg')
+    imgcopy = img.copy()
 
-    #for piece in puzzlepieces:
-    #    vector = get_point_difference(find_center(piece.contour), piece.handle_center)
-    #    vector = rotate_vector(vector, piece.angle)
-    #    new_contour = overlay_piece_to_slot(piece)
-    #    point =  add_points(find_center(new_contour), vector)
-
-    #    draw_point(point, img, (0,255,255))
-    #    draw_point(piece.match.center, img, (0,0,255))
-
-    #show(img)
-
-    show(img)
-    thresh = process_img(img, 130)
-    show(thresh)
-
-    contours = get_contours_ccomp(thresh)
-
-    for contour in contours:
-        length = cv2.arcLength(contour, True)
-        if (length > 300 and length < 350):
-            print(length)
-            draw_contours([contour], img)
-            show(img)
-=======
-    img = cv2.imread('C:/Users/CarPuzzle/Desktop/git repository/image_processing/images/image.jpg')
     puzzlepieces, slots = init_pieces_and_slots(img)
 
     print(check_initialization(puzzlepieces, slots))
-    print(len(puzzlepieces) == 0)
 
->>>>>>> 1deb72787900200e301eba773455a27ab563ad8f:image_processing/puzzle_image_processing.py
+    for piece in puzzlepieces:
+        draw_point(piece.handle_center, imgcopy, (0,255,0))
+
+
+    HANDLE_HEIGHT = 460
+    puzzlepieces, slots = init_pieces_and_slots(img)
+    for piece in puzzlepieces:
+        draw_point(piece.handle_center, imgcopy, (0, 0, 255))
+
+    show(imgcopy)
+
+
