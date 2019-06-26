@@ -4,8 +4,6 @@
     <list default="true" id="4f36117b-95f1-468e-bca0-be6172fddb6d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/KukaCommunication/kuka_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/KukaCommunication/kuka_control.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_processing/puzzle_image_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_processing/puzzle_image_processing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_processing/ueye_camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_processing/ueye_camera.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,13 +14,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="24" column="134" selection-start-line="24" selection-start-column="134" selection-end-line="24" selection-end-column="134" />
+            <state relative-caret-position="415">
+              <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
               <folding>
-                <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#1#59#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -31,8 +29,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/image_processing/camera_control.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4">
-              <caret line="144" lean-forward="true" selection-start-line="144" selection-end-line="144" />
+            <state relative-caret-position="2363">
+              <caret line="144" selection-start-line="144" selection-end-line="144" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -40,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/KukaCommunication/kuka_control.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="189" column="4" lean-forward="true" selection-start-line="189" selection-start-column="4" selection-end-line="189" selection-end-column="4" />
+            <state relative-caret-position="17">
+              <caret line="235" column="34" selection-start-line="235" selection-start-column="34" selection-end-line="235" selection-end-column="34" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -55,8 +53,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/image_processing/ueye_camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
+            <state relative-caret-position="41">
+              <caret line="165" column="5" lean-forward="true" selection-start-line="165" selection-start-column="5" selection-end-line="165" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -64,8 +62,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/image_processing/puzzle_image_processing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="457" column="18" lean-forward="true" selection-start-line="457" selection-start-column="18" selection-end-line="457" selection-end-column="18" />
+            <state relative-caret-position="7735">
+              <caret line="457" column="18" selection-start-line="457" selection-start-column="18" selection-end-line="457" selection-end-column="18" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -107,10 +105,10 @@
         <option value="$PROJECT_DIR$/image_processing/main_image_processing.py" />
         <option value="$PROJECT_DIR$/KukaCommunication/main.py" />
         <option value="$PROJECT_DIR$/image_processing/camera_control.py" />
-        <option value="$PROJECT_DIR$/image_processing/ueye_camera.py" />
         <option value="$PROJECT_DIR$/image_processing/puzzle_image_processing.py" />
-        <option value="$PROJECT_DIR$/KukaCommunication/kuka_control.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/image_processing/ueye_camera.py" />
+        <option value="$PROJECT_DIR$/KukaCommunication/kuka_control.py" />
       </list>
     </option>
   </component>
@@ -125,7 +123,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -147,6 +144,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -405,10 +403,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/camera_control.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2363">
+          <caret line="144" selection-start-line="144" selection-end-line="144" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/image_processing/puzzle_image_processing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="457" column="18" lean-forward="true" selection-start-line="457" selection-start-column="18" selection-end-line="457" selection-end-column="18" />
+        <state relative-caret-position="7735">
+          <caret line="457" column="18" selection-start-line="457" selection-start-column="18" selection-end-line="457" selection-end-column="18" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -417,37 +425,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/image_processing/ueye_camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KukaCommunication/kuka_control.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="189" column="4" lean-forward="true" selection-start-line="189" selection-start-column="4" selection-end-line="189" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/image_processing/camera_control.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4">
-          <caret line="144" lean-forward="true" selection-start-line="144" selection-end-line="144" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="41">
+          <caret line="165" column="5" lean-forward="true" selection-start-line="165" selection-start-column="5" selection-end-line="165" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="24" column="134" selection-start-line="24" selection-start-column="134" selection-end-line="24" selection-end-column="134" />
+        <state relative-caret-position="415">
+          <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#1#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/KukaCommunication/kuka_control.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="235" column="34" selection-start-line="235" selection-start-column="34" selection-end-line="235" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>

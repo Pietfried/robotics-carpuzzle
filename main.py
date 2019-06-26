@@ -1,14 +1,12 @@
-import cv2
 from image_processing.camera_control import give_da_stream
 import image_processing.puzzle_image_processing as imgp
 from KukaCommunication.kuka_control import PuzzleSolver
 import numpy as np
-import os
-import time
 
 if __name__ == '__main__':
 
-    path = 'image_processing/images/'
+    #path = 'image_processing/images/'
+    shakingMode = 'O'
     puzzleSolved = False
     kuka = PuzzleSolver()
     kuka.go2Origin()
@@ -22,7 +20,7 @@ if __name__ == '__main__':
                         puzzleSolved = len(puzzlepieces) == 0
                         if not puzzleSolved:
                             kuka.pick(xy=puzzlepieces[0].handle_center)
-                            kuka.place(xy=puzzlepieces[0].match.center, angle= kuka.convert_angle(puzzlepieces[0].angle),doShaking='O')
+                            kuka.place(xy=puzzlepieces[0].match.center, angle= kuka.convert_angle(puzzlepieces[0].angle),doShaking=shakingMode)
                             kuka.go2Origin()
                             print("puzzlepiece placed")
                         else:
