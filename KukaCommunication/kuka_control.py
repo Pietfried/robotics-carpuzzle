@@ -84,9 +84,12 @@ class PuzzleSolver:
         self.z_Travel = -60#-150
         self.z_Place = -25#-59.5
         self.z_Default = -185#-280
+        self.z_Draw = -60
+        self.z_Draw_Travel=-185
+        self.xy_shake = 12
 
         self.convertCoordiante = 1 / (2.3022)
-        self.offset = (5.32, -10.4)
+        self.offset = (10.11, -8.51)
 
         self.DEFAULT_B = 0
         self.DEFAULT_C = 0
@@ -123,11 +126,40 @@ class PuzzleSolver:
         self.__go2Position(xy, self.z_Travel, self.defaultAngle)
         pass
 
-    def place(self, xy, angle):
-        self.__go2Position(xy, self.z_Travel, angle)
+    def shake_X(self, xy, angle):
+        self.__go2Position((xy[0] + self.xy_shake, xy[1]), self.z_Place, angle)
+        self.__go2Position((xy[0] - self.xy_shake, xy[1]), self.z_Place, angle)
         self.__go2Position(xy, self.z_Place, angle)
-        self.kukaRemote.open_grp(False)
-        self.__go2Position(xy, self.z_Travel, self.defaultAngle)
+        self.__go2Position((xy[0], xy[1] + self.xy_shake), self.z_Place, angle)
+        self.__go2Position((xy[0], xy[1] - self.xy_shake), self.z_Place, angle)
+        self.__go2Position(xy, self.z_Place, angle)
+
+    def shake_O(self,xy,angle):
+        self.__go2Position((xy[0] + self.xy_shake, xy[1]), self.z_Place, angle)
+        self.__go2Position((xy[0], xy[1] + self.xy_shake), self.z_Place, angle)
+        self.__go2Position((xy[0] - self.xy_shake, xy[1]), self.z_Place, angle)
+        self.__go2Position((xy[0], xy[1] - self.xy_shake), self.z_Place, angle)
+        self.__go2Position(xy, self.z_Place, angle)
+
+    def place(self, xy, angle,placeHeightDefault = True,doShaking='X'):
+
+        if(placeHeightDefault):
+            self.__go2Position(xy, self.z_Travel, angle)
+            self.__go2Position(xy, self.z_Place, angle)
+            self.kukaRemote.open_grp(False)
+
+            #Shake puzzle piece inside the board
+            if(doShaking=='X'):
+                self.shake_X(xy,angle)
+            elif(doShaking=='O'):
+                self.shake_O(xy,angle)
+
+            self.__go2Position(xy, self.z_Travel, self.defaultAngle)
+        else:
+            self.__go2Position(xy, self.z_Draw_Travel, angle)
+            self.__go2Position(xy, self.z_Draw, angle)
+            self.__go2Position(xy, self.z_Draw_Travel, angle)
+
         pass
 
     def go2Origin(self):
@@ -136,7 +168,6 @@ class PuzzleSolver:
         pass
 
     def convert_angle(self,angle):
-
         if (abs(angle) > 180):
             angle = (-angle % 180)
         else:
@@ -144,54 +175,16 @@ class PuzzleSolver:
 
         return angle
 
+    def draw_Points4Offset(self):
+        self.kukaRemote.open_grp(True)
+        for x in range(50,1000,100):
+            for y in range(50,700,100):
+                self.place(xy=(x,y),angle=0,placeHeightDefault=False)
+
+        kuka.go2Origin()
+
 if __name__ == '__main__':
     kuka = PuzzleSolver()
     kuka.go2Origin()
 
-    img = cv2.imread('C:/Users/CarPuzzle/Desktop/git repository/image_processing/images/image39.jpg')
-    puzzlepieces, slots = imgp.init_pieces_and_slots(img)
-
-    #kuka.pick(xy=puzzlepieces[4].handle_center)
-    #kuka.place(xy=puzzlepieces[4].match.center, angle= kuka.convert_angle(puzzlepieces[4].angle))
-
-    #kuka.go2Origin()
-
-    for piece in puzzlepieces:
-        kuka.pick(xy=piece.handle_center)
-        kuka.place(xy=piece.match.center, angle= kuka.convert_angle(piece.angle))
-
-    kuka.go2Origin()
-
-    #kuka.pick(xy=(431, 703), angle=0)
-    #kuka.pick(xy=(,653), angle=0)
-    #input()
-
-    # kuka.pick(xy=(520,393), angle=0)
-    #input()
-
-    # kuka.pick(xy=(93,109), angle=0)
-    #input()
-
-    # kuka.pick(xy=(935,94), angle=0)
-    #input()
-
-    # kuka.place(xy=(905, 372), angle=-58.2939)
-
-#    rck = RemoteControlKUKA()
-#    open_grp = True
-#    default_Axis = ',A -175.18,B 0,C -180,S 6,T 27,E1 0.0,E2 0.0,E3 0.0,E4 0.0,E5 0.0,E6 0.0}'####
-
-#    rck.move_lin_e6pos('{X 340,Y 225,Z -10,A -10,B 0,C 0}')
-#    rck.open_grp(True)
-#    rck.move_lin_e6pos('{X 340,Y 225,Z -40,A -10,B 0,C 0}')
-#    rck.move_lin_e6pos('{X 50.1234,Y 50.1234,Z -40,A -10,B 0,C 0}')
-#    rck.move_lin_e6pos('{X 50.1234,Y 50.1234,Z -7,A 0,B 0,C 0}')
-#    rck.open_grp(False)
-#    rck.move_lin_e6pos('{X 50.1234,Y 50.1234,Z -40,A 0,B 0,C 0}')
-#    time.sleep(1)
-#    rck.move_lin_e6pos('{X 50.1234,Y 50.1234,Z -7,A 0,B 0,C 0}')
-#    rck.open_grp(True)
-#    rck.move_lin_e6pos('{X 50.1234,Y 50.1234,Z -40,A 0,B 0,C 0}')
-#    rck.move_lin_e6pos('{X 340,Y 225,Z -40,A -10,B 0,C 0}')
-#    rck.move_lin_e6pos('{X 340,Y 225,Z -15,A -10,B 0,C 0}')
-#    rck.open_grp(False)
+    kuka.draw_Points4Offset()

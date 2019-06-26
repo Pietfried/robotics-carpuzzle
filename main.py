@@ -22,7 +22,7 @@ if __name__ == '__main__':
                         puzzleSolved = len(puzzlepieces) == 0
                         if not puzzleSolved:
                             kuka.pick(xy=puzzlepieces[0].handle_center)
-                            kuka.place(xy=puzzlepieces[0].match.center, angle= kuka.convert_angle(puzzlepieces[0].angle))
+                            kuka.place(xy=puzzlepieces[0].match.center, angle= kuka.convert_angle(puzzlepieces[0].angle),doShaking='O')
                             kuka.go2Origin()
                             print("puzzlepiece placed")
                         else:

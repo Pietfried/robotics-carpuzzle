@@ -27,6 +27,8 @@
 =======
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/KukaCommunication/kuka_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/KukaCommunication/kuka_control.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_processing/puzzle_image_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_processing/puzzle_image_processing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_processing/ueye_camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_processing/ueye_camera.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
 >>>>>>> 1deb72787900200e301eba773455a27ab563ad8f
     </list>
@@ -38,6 +40,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
 <<<<<<< HEAD
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/image_processing/main_image_processing.py">
@@ -51,6 +54,13 @@
             <state relative-caret-position="187">
               <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
 >>>>>>> 1deb72787900200e301eba773455a27ab563ad8f
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="24" column="134" selection-start-line="24" selection-start-column="134" selection-end-line="24" selection-end-column="134" />
+>>>>>>> b31284ecc6749bee4b51dfc000bd15335e9255b2
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -61,10 +71,22 @@
 <<<<<<< HEAD
 =======
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/image_processing/camera_control.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4">
+              <caret line="144" lean-forward="true" selection-start-line="144" selection-end-line="144" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/KukaCommunication/kuka_control.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2074">
-              <caret line="125" column="8" selection-start-line="125" selection-start-column="8" selection-end-line="125" selection-end-column="8" />
+            <state relative-caret-position="840">
+              <caret line="189" column="4" lean-forward="true" selection-start-line="189" selection-start-column="4" selection-end-line="189" selection-end-column="4" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -72,11 +94,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/image_processing/ueye_camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="183" column="35" lean-forward="true" selection-start-line="183" selection-start-column="35" selection-end-line="183" selection-end-column="35" />
+            <state relative-caret-position="177">
+              <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/image_processing/puzzle_image_processing.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="377">
+              <caret line="457" column="18" lean-forward="true" selection-start-line="457" selection-start-column="18" selection-end-line="457" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -101,7 +135,15 @@
       <find>croped</find>
 =======
       <find>get_mask</find>
+<<<<<<< HEAD
 >>>>>>> 1deb72787900200e301eba773455a27ab563ad8f
+=======
+      <find>1024</find>
+      <find>error</find>
+      <find>error!</find>
+      <find>print(</find>
+      <find>rad_AN</find>
+>>>>>>> b31284ecc6749bee4b51dfc000bd15335e9255b2
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -117,11 +159,15 @@
         <option value="$PROJECT_DIR$/image_processing/main_image_processing.py" />
 =======
         <option value="$PROJECT_DIR$/image_processing/camera_control.py" />
+        <option value="$PROJECT_DIR$/image_processing/ueye_camera.py" />
         <option value="$PROJECT_DIR$/image_processing/puzzle_image_processing.py" />
         <option value="$PROJECT_DIR$/KukaCommunication/kuka_control.py" />
         <option value="$PROJECT_DIR$/main.py" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/image_processing/ueye_camera.py" />
 >>>>>>> 1deb72787900200e301eba773455a27ab563ad8f
+=======
+>>>>>>> b31284ecc6749bee4b51dfc000bd15335e9255b2
       </list>
     </option>
   </component>
@@ -174,12 +220,38 @@
     </option>
   </component>
 <<<<<<< HEAD
+<<<<<<< HEAD
   <component name="RunManager" selected="Python.main_image_processing">
     <configuration name="camera_control" type="PythonConfigurationType" factoryName="Python" temporary="true">
 =======
   <component name="RunManager" selected="Python.ueye_camera">
     <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
 >>>>>>> 1deb72787900200e301eba773455a27ab563ad8f
+=======
+  <component name="RunManager" selected="Python.main (2)">
+    <configuration name="kuka_control" type="PythonConfigurationType" factoryName="Python" temporary="true">
+>>>>>>> b31284ecc6749bee4b51dfc000bd15335e9255b2
+      <module name="git repository" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/KukaCommunication" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/KukaCommunication/kuka_control.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="git repository" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -213,27 +285,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main_image_processing" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="git repository" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/image_processing" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\CarPuzzle\Desktop\git repository\image_processing\puzzle_image_processing.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -292,6 +343,7 @@
     <recent_temporary>
       <list>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <item itemvalue="Python.main_image_processing" />
         <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.ueye_camera" />
@@ -299,11 +351,18 @@
         <item itemvalue="Python.camera_control" />
 =======
         <item itemvalue="Python.ueye_camera" />
+=======
+>>>>>>> b31284ecc6749bee4b51dfc000bd15335e9255b2
         <item itemvalue="Python.main (2)" />
+        <item itemvalue="Python.ueye_camera" />
         <item itemvalue="Python.puzzle_image_processing" />
+        <item itemvalue="Python.kuka_control" />
         <item itemvalue="Python.main (1)" />
+<<<<<<< HEAD
         <item itemvalue="Python.main_image_processing" />
 >>>>>>> 1deb72787900200e301eba773455a27ab563ad8f
+=======
+>>>>>>> b31284ecc6749bee4b51dfc000bd15335e9255b2
       </list>
     </recent_temporary>
   </component>
@@ -341,22 +400,27 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.32900432" />
 =======
     <frame x="1392" y="-8" width="1416" height="1026" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17924528" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32922733" />
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Run" order="2" weight="0.32922733" />
 >>>>>>> 1deb72787900200e301eba773455a27ab563ad8f
+=======
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4992743" visible="true" weight="0.32922733" />
+>>>>>>> b31284ecc6749bee4b51dfc000bd15335e9255b2
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39977604" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32922733" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32922733" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.23180291" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="10" visible="true" weight="0.32922733" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5007257" side_tool="true" weight="0.32922733" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32922733" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -413,6 +477,7 @@
     <entry file="file://$PROJECT_DIR$/KukaCommunication/main_image_processing.py" />
     <entry file="file://P:/Users/2019/CarPuzzle/Desktop/git repository/KukaCommunication/main.py" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/image_processing/program.py">
 =======
     <entry file="file://$PROJECT_DIR$/image_processing/puzzle_image_processing.py">
@@ -425,6 +490,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> b31284ecc6749bee4b51dfc000bd15335e9255b2
     <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-509501926/cv2/cv2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126106">
@@ -432,6 +499,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/image_processing/camera_control.py">
 >>>>>>> 1deb72787900200e301eba773455a27ab563ad8f
       <provider selected="true" editor-type-id="text-editor">
@@ -443,6 +511,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> b31284ecc6749bee4b51dfc000bd15335e9255b2
     <entry file="file://$PROJECT_DIR$/KukaCommunication/py_openshowvar.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -463,27 +533,39 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/main.py">
 >>>>>>> 1deb72787900200e301eba773455a27ab563ad8f
+=======
+    <entry file="file://$PROJECT_DIR$/image_processing/puzzle_image_processing.py">
+>>>>>>> b31284ecc6749bee4b51dfc000bd15335e9255b2
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+        <state relative-caret-position="377">
+          <caret line="457" column="18" lean-forward="true" selection-start-line="457" selection-start-column="18" selection-end-line="457" selection-end-column="18" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/image_processing/ueye_camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/KukaCommunication/kuka_control.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2074">
-          <caret line="125" column="8" selection-start-line="125" selection-start-column="8" selection-end-line="125" selection-end-column="8" />
+        <state relative-caret-position="840">
+          <caret line="189" column="4" lean-forward="true" selection-start-line="189" selection-start-column="4" selection-end-line="189" selection-end-column="4" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/image_processing/main_image_processing.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -498,6 +580,25 @@
         <state relative-caret-position="347">
           <caret line="183" column="35" lean-forward="true" selection-start-line="183" selection-start-column="35" selection-end-line="183" selection-end-column="35" />
 >>>>>>> 1deb72787900200e301eba773455a27ab563ad8f
+=======
+    <entry file="file://$PROJECT_DIR$/image_processing/camera_control.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4">
+          <caret line="144" lean-forward="true" selection-start-line="144" selection-end-line="144" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="24" column="134" selection-start-line="24" selection-start-column="134" selection-end-line="24" selection-end-column="134" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+>>>>>>> b31284ecc6749bee4b51dfc000bd15335e9255b2
         </state>
       </provider>
     </entry>

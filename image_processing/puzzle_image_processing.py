@@ -289,8 +289,6 @@ def get_handle_circle(contour, img):
     contours = get_contours_ccomp(thresh)
     new_contours = []
 
-    #show(thresh)
-
     for curr_contour in contours:
         #print("area:", cv2.contourArea(curr_contour, True))
         #print("center difference:", abs(find_center(contour)[0] - find_center(curr_contour)[0]))
@@ -304,6 +302,7 @@ def get_handle_circle(contour, img):
         return new_contours[0]
     else:
         print(len(new_contours))
+        print("Center:", find_center(contour))
         print("Error! Did not find circle correctly.")
         return None
 
@@ -408,7 +407,7 @@ def get_mask_image(piece, img):
 
     #cropped = cropped[0].shape()
 
-    mask = np.zeros((1024,768, 3), np.uint8) # mask = np.zeros((1024,768, 3), np.uint8)
+    mask = np.zeros((1024,768, 4), np.uint8) # mask = np.zeros((1024,768, 3), np.uint8)
     x_offset = y_offset = 200
 
     mask[y_offset:y_offset + cropped.shape[0], x_offset:x_offset + cropped.shape[1]] = cropped
@@ -913,4 +912,28 @@ if __name__ == '__main__':
 
     show(imgcopy)
 
+def find_calibration_contours(img):
+    """
+    this method is used to detect and return the contours of a calibration image
+    :param img: the image should be a white paper with small dots on it
+    :return: contours of the dots
+    """
+    processed = process_img(img, 150)
+    contours = get_contours_external(processed)
+    return contours
 
+def show_calibration_points(contours):
+    """
+    method to show and print the coordiantes of each calibration point
+    :param contours:
+    :return:
+    """
+    for contour in contours:
+        draw_contours([contour], img)
+        print("coordinate:", find_center(contour))
+        show(img)
+
+if __name__ == '__main__':
+    img = cv2.imread('C:/Users/CarPuzzle/Desktop/git repository/image_processing/images/offset1.jpg')
+    
+    
