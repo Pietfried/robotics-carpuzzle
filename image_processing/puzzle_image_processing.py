@@ -1,12 +1,35 @@
+
 import cv2
 import numpy as np
 import math
 
-#GLOBAL VARIABLES
+"""
+This module is used as a part of the Carpuzzle Project of the FH Wedel Robotics Masters Course (SS2019).
+It provides functionality for image processing and it's responsible for determining the coordinates and angles
+for puzzlepieces and slots of a puzzle. The coordinates and angles form the basis for the movement of the robot. 
+"""
+
+#GLOBALS
 
 DISTANCE_CAMERA_TO_BUTTOM = 27624 # 120cm
 HANDLE_HEIGHT = 575 # 2,5cm
 IMAGE_CENTER = (512, 384)
+
+FILTER_BOARD_CONTOUR_LENGTH = 2000
+FILTER_MIN_CONTOUR_AREA = 10000
+
+MAX_DISTANCE_TO_CONTOUR_CENTER = 20
+MIN_CIRCLE_LENGTH = 50
+MAX_CIRCLE_LENGTH = 70
+MIN_CIRCLE_AREA = 245
+MAX_CIRCLE_AREA = 320
+
+THRESHOLD_FOR_CROPPED = 20
+THRESHOLD_FOR_ROTATIONS = 40
+THRESHOLD_FOR_CIRCLES = 60
+THRESHOLD_FOR_PIECE_PROCESSING = 50
+THRESHOLD_FOR_SLOT_PROCESSING = 95
+THRESHOLD_FOR_CALIBRATION_POINTS = 150
 
 # Classes
 class PuzzlePiece:
@@ -61,10 +84,6 @@ class SlotPiece:
             print("Contour: not found")
         print("center:", self.center)
 
-class IMG_Processing:
-    def __init__(self):
-        pass
-
 def show(img):
     """
     method to show the given image. The image will dissapear when pressing any button.
@@ -96,7 +115,7 @@ def find_board_contour_idx(contours):
     idx = 0
     save = 0
     for contour in contours:
-        if (cv2.arcLength(contour, True) > 2000):
+        if (cv2.arcLength(contour, True) > FILTER_BOARD_CONTOUR_LENGTH):
             save = idx
         idx = idx + 1
     return save
@@ -108,12 +127,12 @@ def find_board_contour(img):
     :param img: the image containing the puzzle board
     :return: the board contour
     """
-    img = process_img(img, 50)
+    img = process_img(img, THRESHOLD_FOR_PIECE_PROCESSING)
     contours = get_contours_ccomp(img)
     idx = 0
     curr_contour = None
     for contour in contours:
-        if (cv2.arcLength(contour, True) > 2000):
+        if (cv2.arcLength(contour, True) > FILTER_BOARD_CONTOUR_LENGTH):
             curr_contour = contour
         idx = idx + 1
     return curr_contour
@@ -165,17 +184,17 @@ def get_cut_contour(contour, img):
 def get_piece_contours(img):
     """
     method to get the piece contours in the given image
-    :param img: the image.
+    :param img: the image that is not processed.
     :return: the contours of the pieces
     """
 
-    #img = (img - 255)
+    processed_img = process_img(img, THRESHOLD_FOR_PIECE_PROCESSING)
     piece_contours = []
-    all_contours = get_contours_ccomp(img)
+    all_contours = get_contours_ccomp(processed_img)
 
     board_area = get_board_area(all_contours[find_board_contour_idx(all_contours)])
     for contour in all_contours:
-        if (cv2.contourArea(contour) > 10000
+        if (cv2.contourArea(contour) > FILTER_MIN_CONTOUR_AREA
                 and cv2.contourArea(contour) < board_area and cv2.contourArea(
                 contour) > 0):
             piece_contours.append(contour)
@@ -195,7 +214,7 @@ def get_slot_contours(img):
     contours = get_contours_external(cut_board_img)
 
     for contour in contours:
-        if (cv2.contourArea(contour) > 10000 and cv2.contourArea(contour) > 0): #TODO: adjust constant here.
+        if (cv2.contourArea(contour) > FILTER_MIN_CONTOUR_AREA and cv2.contourArea(contour) > 0): #TODO: adjust constant here.
             slot_contours.append(contour)
     return slot_contours
 
@@ -219,7 +238,7 @@ def find_match(contour, contours):
         return best_contour
     else:
         print("Error. Match value is too high.")
-        return best_contour
+        return None
 
 def show_matches(puzzlepieces, img):
     """
@@ -283,7 +302,7 @@ def get_handle_circle(contour, img):
 
     cut_piece_img = get_cut_contour(contour, img)
     gray_img = cv2.cvtColor(cut_piece_img, cv2.COLOR_BGR2GRAY)
-    ret, thresh = cv2.threshold(gray_img, 60, 255, cv2.THRESH_BINARY)
+    ret, thresh = cv2.threshold(gray_img, THRESHOLD_FOR_CIRCLES, 255, cv2.THRESH_BINARY)
     thresh = black_background(thresh, contour)
 
     contours = get_contours_ccomp(thresh)
@@ -318,9 +337,9 @@ def isValidCircle(curr_contour, contour):
     curr_center = find_center(curr_contour)
     area = cv2.contourArea(curr_contour, True)
     # valid circle if: area is ok, length is ok and distance to center is ok
-    if (cv2.arcLength(curr_contour, True) > 50 and cv2.arcLength(curr_contour, True) < 70 and abs(
-            curr_center[0] - center[0]) < 20 and abs(
-        curr_center[1] - center[1]) < 20 and abs(area) > 245 and abs(area) < 320):
+    if (cv2.arcLength(curr_contour, True) > MIN_CIRCLE_LENGTH and cv2.arcLength(curr_contour, True) < MAX_CIRCLE_LENGTH and abs(
+            curr_center[0] - center[0]) < MAX_DISTANCE_TO_CONTOUR_CENTER and abs(
+        curr_center[1] - center[1]) < MAX_DISTANCE_TO_CONTOUR_CENTER and abs(area) > MIN_CIRCLE_AREA and abs(area) < MAX_CIRCLE_AREA):
         return True
     else:
         return False
@@ -390,7 +409,7 @@ def rotate_piece(puzzlepiece, angle, img):
     :return: the rotated image
     """
     mask = get_mask_image(puzzlepiece, img)
-    processed_img = process_img(mask.copy(), 40)
+    processed_img = process_img(mask.copy(), THRESHOLD_FOR_ROTATIONS)
     contours = get_contours_external(processed_img)
     center = find_center(contours[0])
 
@@ -407,7 +426,7 @@ def get_mask_image(piece, img):
 
     #cropped = cropped[0].shape()
 
-    mask = np.zeros((1024,768, 3), np.uint8) # mask = np.zeros((1024,768, 4), np.uint8)
+    mask = np.zeros((1024,768, 4), np.uint8)
     x_offset = y_offset = 200
 
     mask[y_offset:y_offset + cropped.shape[0], x_offset:x_offset + cropped.shape[1]] = cropped
@@ -541,7 +560,7 @@ def process_cropped(img):
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # blurred_img = cv2.medianBlur(gray_img, 5)
     # edged_img = cv2.Canny(blurred_img, 63, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
-    ret, threshold = cv2.threshold(gray_img, 20, 255, cv2.THRESH_BINARY)
+    ret, threshold = cv2.threshold(gray_img, THRESHOLD_FOR_CROPPED, 255, cv2.THRESH_BINARY)
     # threshold = 255 - threshold  # invert the coloring
     return threshold
 
@@ -581,7 +600,7 @@ def get_overlay_area(puzzlepiece, angle, img):
     :return: the external area of two contours overlaying each other
     """
     rotated_img = rotate_piece(puzzlepiece, angle, img)
-    processed = process_img(rotated_img, 40)
+    processed = process_img(rotated_img, THRESHOLD_FOR_ROTATIONS)
     processed = (255 - processed)
     contours_puzzlepiece = get_contours_external(processed)
     draw_contours(contours_puzzlepiece, rotated_img)
@@ -602,7 +621,7 @@ def get_overlay_area(puzzlepiece, angle, img):
     # draw_rect(img, cv2.minAreaRect(contours_puzzlepiece[0]))
     # show(img)
 
-    img = process_img(img, 20)
+    img = process_img(img, THRESHOLD_FOR_CROPPED)
     img = (255 - img)
 
     overall_contour = get_contours_external(img)
@@ -668,7 +687,7 @@ def process_for_pieces(img):
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # blurred_img = cv2.medianBlur(gray_img, 5)
     # edged_img = cv2.Canny(blurred_img, 63, 180) # these parameters are important. The image detection behaves differently when changing the contrast.
-    ret, threshold = cv2.threshold(gray_img, 50, 255, cv2.THRESH_BINARY)
+    ret, threshold = cv2.threshold(gray_img, THRESHOLD_FOR_PIECE_PROCESSING, 255, cv2.THRESH_BINARY)
     threshold = 255 - threshold  # invert the coloring
     return threshold
 
@@ -681,7 +700,7 @@ def process_for_slots(img):
     """
     cut_board_contour = find_board_contour(img)
     cut_board_img = get_cut_contour(cut_board_contour, img)
-    cut_board_img = process_img(cut_board_img, 95) # this value is 65 for darker images
+    cut_board_img = process_img(cut_board_img, THRESHOLD_FOR_SLOT_PROCESSING) # this value is 65 for darker images
     cut_board_img = black_background(cut_board_img, cut_board_contour)
     cv2.drawContours(cut_board_img, [cut_board_contour], -1, (0, 0, 0), 2)
     return cut_board_img
@@ -795,11 +814,17 @@ def add_points(point1, point2):
 
 def check_initialization(puzzlepieces, slotpieces):
     return check_contours(slotpieces, puzzlepieces) and check_centers(slotpieces, puzzlepieces)
-    #check_angle(puzzlepieces)
-    #check_matches(puzzlepieces)
-
 
 def check_contours(slotpieces, puzzlepieces):
+    """
+    method to check if the contours of puzzlepieces and slots are valid
+    :param slotpieces:
+    :type slotpieces:
+    :param puzzlepieces:
+    :type puzzlepieces:
+    :return:
+    :rtype:
+    """
     if (len(slotpieces) != len(puzzlepieces)):
         return False
     for i in range(len(slotpieces)):
@@ -808,6 +833,15 @@ def check_contours(slotpieces, puzzlepieces):
     return True
 
 def check_centers(slotpieces, puzzlepieces):
+    """
+    method to check if the centers of puzzlepieces and slots are valid.
+    :param slotpieces:
+    :type slotpieces:
+    :param puzzlepieces:
+    :type puzzlepieces:
+    :return:
+    :rtype:
+    """
     if (len(slotpieces) != len(puzzlepieces)):
         return False
     for i in range(len(slotpieces)):
@@ -822,6 +856,13 @@ def pretty_print(puzzlepieces):
         print("****************************")
 
 def correctParallaxEffect(wrong_center):
+    """
+    method to correct the parallax effect.
+    :param wrong_center:
+    :type wrong_center:
+    :return: the corrected coordinate
+    :rtype:
+    """
     distance_center_to_handle_center = get_distance(IMAGE_CENTER, wrong_center) #this is a2
     parallaxError = (distance_center_to_handle_center / DISTANCE_CAMERA_TO_BUTTOM) * HANDLE_HEIGHT #this is a
     point_difference = get_point_difference(IMAGE_CENTER, wrong_center)
@@ -834,6 +875,13 @@ def correctParallaxEffect(wrong_center):
     return (int(corrected_handle_center[0]), int(corrected_handle_center[1]))
 
 def normalize_vector(vector):
+    """
+    method to normalize the given vector
+    :param vector:
+    :type vector:
+    :return:
+    :rtype:
+    """
     amount = math.sqrt(vector[0]**2 + vector[1]**2)
     correctionVector = (vector[0]/amount, vector[1]/amount)
     return correctionVector
@@ -846,7 +894,7 @@ def init_pieces_and_slots(img):
     :return: lists of puzzlepieces and slotpieces
     """
     slot_contours = get_slot_contours(img)
-    piece_contours = get_piece_contours(process_img(img, 50))
+    piece_contours = get_piece_contours(img)
 
     puzzlepieces = []
     slotpieces = []
@@ -886,34 +934,18 @@ def find_calibration_contours(img):
     :param img: the image should be a white paper with small dots on it
     :return: contours of the dots
     """
-    processed = process_img(img, 150)
+    processed = process_img(img, THRESHOLD_FOR_CALIBRATION_POINTS)
     contours = get_contours_external(processed)
     return contours
 
-def show_calibration_points(contours):
+def show_calibration_points(contours, img):
     """
     method to show and print the coordiantes of each calibration point
     :param contours:
+    :param img
     :return:
     """
     for contour in contours:
         draw_contours([contour], img)
         print("coordinate:", find_center(contour))
         show(img)
-
-if __name__ == '__main__':
-    img = cv2.imread('images\image15.jpg')
-    imgcopy = img.copy()
-
-    puzzlepieces, slots = init_pieces_and_slots(img)
-
-    print(check_initialization(puzzlepieces, slots))
-
-    for puzzlepiece in puzzlepieces:
-        handle_circle = get_handle_circle(puzzlepiece.contour, img)
-        wrong_center = find_center(handle_circle)
-        correct_center = puzzlepiece.handle_center
-        draw_point(wrong_center, imgcopy, (0,0,255))
-        draw_point(correct_center, imgcopy, (0, 255, 0))
-
-    cv2.imwrite("parallaxeffect.jpg", imgcopy)
