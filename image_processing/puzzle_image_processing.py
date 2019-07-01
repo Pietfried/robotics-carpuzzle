@@ -407,7 +407,7 @@ def get_mask_image(piece, img):
 
     #cropped = cropped[0].shape()
 
-    mask = np.zeros((1024,768, 4), np.uint8) # mask = np.zeros((1024,768, 3), np.uint8)
+    mask = np.zeros((1024,768, 3), np.uint8) # mask = np.zeros((1024,768, 4), np.uint8)
     x_offset = y_offset = 200
 
     mask[y_offset:y_offset + cropped.shape[0], x_offset:x_offset + cropped.shape[1]] = cropped
@@ -822,11 +822,6 @@ def pretty_print(puzzlepieces):
         print("****************************")
 
 def correctParallaxEffect(wrong_center):
-
-    print(IMAGE_CENTER)
-    print(HANDLE_HEIGHT)
-    print(DISTANCE_CAMERA_TO_BUTTOM)
-
     distance_center_to_handle_center = get_distance(IMAGE_CENTER, wrong_center) #this is a2
     parallaxError = (distance_center_to_handle_center / DISTANCE_CAMERA_TO_BUTTOM) * HANDLE_HEIGHT #this is a
     point_difference = get_point_difference(IMAGE_CENTER, wrong_center)
@@ -836,20 +831,12 @@ def correctParallaxEffect(wrong_center):
     correctionVector  = (parallaxError*directionVector[0], parallaxError*directionVector[1])
     corrected_handle_center = add_points(wrong_center, correctionVector)
 
-    print(corrected_handle_center)
-    print(int(corrected_handle_center[0]))
-    print(int(corrected_handle_center[1]))
-
     return (int(corrected_handle_center[0]), int(corrected_handle_center[1]))
 
 def normalize_vector(vector):
     amount = math.sqrt(vector[0]**2 + vector[1]**2)
     correctionVector = (vector[0]/amount, vector[1]/amount)
     return correctionVector
-
-
-
-    pass
 
 def init_pieces_and_slots(img):
     """
@@ -891,26 +878,7 @@ def overlay_piece_to_slot(piece):
     return contour
 
 def draw_point(coordinate, img, color):
-    cv2.circle(img, (int(coordinate[0]), int(coordinate[1])), 1, color, -1)
-
-if __name__ == '__main__':
-    img = cv2.imread('images\image15.jpg')
-    imgcopy = img.copy()
-
-    puzzlepieces, slots = init_pieces_and_slots(img)
-
-    print(check_initialization(puzzlepieces, slots))
-
-    for piece in puzzlepieces:
-        draw_point(piece.handle_center, imgcopy, (0,255,0))
-
-
-    HANDLE_HEIGHT = 460
-    puzzlepieces, slots = init_pieces_and_slots(img)
-    for piece in puzzlepieces:
-        draw_point(piece.handle_center, imgcopy, (0, 0, 255))
-
-    show(imgcopy)
+    cv2.circle(img, (int(coordinate[0]), int(coordinate[1])), 2, color, -1)
 
 def find_calibration_contours(img):
     """
@@ -934,6 +902,18 @@ def show_calibration_points(contours):
         show(img)
 
 if __name__ == '__main__':
-    img = cv2.imread('C:/Users/CarPuzzle/Desktop/git repository/image_processing/images/offset1.jpg')
-    
-    
+    img = cv2.imread('images\image15.jpg')
+    imgcopy = img.copy()
+
+    puzzlepieces, slots = init_pieces_and_slots(img)
+
+    print(check_initialization(puzzlepieces, slots))
+
+    for puzzlepiece in puzzlepieces:
+        handle_circle = get_handle_circle(puzzlepiece.contour, img)
+        wrong_center = find_center(handle_circle)
+        correct_center = puzzlepiece.handle_center
+        draw_point(wrong_center, imgcopy, (0,0,255))
+        draw_point(correct_center, imgcopy, (0, 255, 0))
+
+    cv2.imwrite("parallaxeffect.jpg", imgcopy)
