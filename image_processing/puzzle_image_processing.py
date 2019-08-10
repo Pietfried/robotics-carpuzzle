@@ -426,7 +426,7 @@ def get_mask_image(piece, img):
 
     #cropped = cropped[0].shape()
 
-    mask = np.zeros((1024,768, 4), np.uint8)
+    mask = np.zeros((1024,768, 3), np.uint8) #mask = np.zeros((1024,768, 4), np.uint8)
     x_offset = y_offset = 200
 
     mask[y_offset:y_offset + cropped.shape[0], x_offset:x_offset + cropped.shape[1]] = cropped
